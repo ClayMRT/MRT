@@ -1,125 +1,96 @@
+# Create a large index.html file with 700+ lines, including images with fallback and flip-card animations.
+
+content = """
 <!DOCTYPE html>
 <html lang="kk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Дербес деректерді қорғау</title>
+<title>Дербес деректерді қорғау — Үлкен жоба</title>
 
-<!-- =====================================================
-     GOOGLE FONT
-===================================================== -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<!-- =====================================================
-     ICONS
-===================================================== -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-
-/* =====================================================
-   RESET
-===================================================== */
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+/* =========================================================
+   BASE / RESET
+========================================================= */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{scroll-behavior:smooth}
+body{
+    font-family:'Inter',sans-serif;
+    background:#0b0b0f;
+    color:#eaeaf0;
+    line-height:1.8;
 }
 
-/* =====================================================
+/* =========================================================
    VARIABLES
-===================================================== */
+========================================================= */
 :root{
     --bg:#0b0b0f;
     --card:#151520;
-    --border:rgba(255,255,255,0.08);
     --accent:#7c7cff;
-    --accent-soft:rgba(124,124,255,0.25);
-    --text:#eaeaf0;
+    --accent2:#b6b6ff;
+    --border:rgba(255,255,255,0.08);
 }
 
-/* =====================================================
-   BODY
-===================================================== */
-body{
-    font-family:'Poppins',sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    line-height:1.8;
-    overflow-x:hidden;
-}
-
-/* =====================================================
-   SCROLL PROGRESS
-===================================================== */
-#progress{
-    position:fixed;
-    top:0;
-    left:0;
-    height:4px;
-    width:0%;
-    background:linear-gradient(90deg,#7c7cff,#b6b6ff);
-    z-index:9999;
-}
-
-/* =====================================================
-   NAVBAR
-===================================================== */
+/* =========================================================
+   NAV
+========================================================= */
 nav{
     position:fixed;
-    top:0;
-    left:0;
-    width:100%;
+    top:0;left:0;width:100%;
     padding:18px 6%;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    backdrop-filter:blur(16px);
     background:rgba(11,11,15,0.9);
+    backdrop-filter:blur(16px);
     border-bottom:1px solid var(--border);
-    z-index:1000;
+    z-index:999;
 }
-
 nav .logo{
-    font-size:22px;
     font-weight:800;
+    font-size:20px;
     color:var(--accent);
 }
-
 nav ul{
     list-style:none;
     display:flex;
     gap:22px;
 }
-
 nav ul li a{
-    text-decoration:none;
     color:#fff;
+    text-decoration:none;
     font-weight:500;
-    opacity:0.85;
-    transition:0.3s;
 }
-
 nav ul li a i{
+    color:var(--accent);
     margin-right:6px;
-    color:var(--accent);
 }
 
-nav ul li a:hover{
-    opacity:1;
-    color:var(--accent);
-}
-
-/* =====================================================
+/* =========================================================
    SECTIONS
-===================================================== */
+========================================================= */
 section{
     padding:120px 6%;
 }
+h1,h2,h3,h4{
+    font-weight:700;
+}
+h2{
+    font-size:38px;
+    margin-bottom:30px;
+}
+h2 i{
+    color:var(--accent);
+    margin-right:10px;
+}
 
-/* =====================================================
+/* =========================================================
    HERO
-===================================================== */
+========================================================= */
 .hero{
     min-height:100vh;
     display:grid;
@@ -127,24 +98,134 @@ section{
     gap:60px;
     align-items:center;
 }
-
 .hero h1{
     font-size:56px;
     margin-bottom:20px;
 }
-
 .hero h1 span{
     color:var(--accent);
 }
-
 .hero p{
     font-size:18px;
-    margin-bottom:35px;
-    opacity:0.9;
+    opacity:.9;
+}
+.hero img{
+    width:100%;
+    border-radius:30px;
+    box-shadow:0 40px 120px rgba(0,0,0,0.8);
 }
 
-.hero button{
-    padding:16px 42px;
+/* =========================================================
+   GRID
+========================================================= */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:26px;
+    padding:26px;
+    transition:.4s;
+}
+.card img{
+    width:100%;
+    border-radius:18px;
+    margin-bottom:18px;
+}
+.card h3{
+    color:var(--accent);
+    margin-bottom:10px;
+}
+
+/* =========================================================
+   FLIP CARDS
+========================================================= */
+.flip-card{
+    perspective:1400px;
+}
+.flip-inner{
+    position:relative;
+    width:100%;
+    height:100%;
+    transform-style:preserve-3d;
+    transition:transform .9s cubic-bezier(.4,.2,.2,1);
+}
+.flip-card:hover .flip-inner{
+    transform:rotateY(180deg);
+}
+.flip-front,.flip-back{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    border-radius:26px;
+}
+.flip-front{
+    background:var(--card);
+    padding:26px;
+}
+.flip-back{
+    background:linear-gradient(135deg,var(--accent),#3b3b88);
+    color:#fff;
+    transform:rotateY(180deg);
+    padding:26px;
+    overflow-y:auto;
+}
+.flip-back h4{
+    font-size:20px;
+    margin-bottom:14px;
+}
+.flip-back p{
+    font-size:14px;
+    line-height:1.9;
+    margin-bottom:14px;
+}
+
+/* =========================================================
+   FEEDBACK
+========================================================= */
+.feedback{
+    max-width:900px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid var(--border);
+    border-radius:30px;
+    padding:50px;
+}
+.field{
+    position:relative;
+    margin-bottom:30px;
+}
+.field input,.field textarea{
+    width:100%;
+    background:none;
+    border:none;
+    border-bottom:1px solid rgba(255,255,255,0.4);
+    color:#fff;
+    padding:10px 0;
+}
+.field label{
+    position:absolute;
+    left:0;
+    top:10px;
+    opacity:.6;
+    transition:.3s;
+}
+.field input:focus+label,
+.field input:valid+label,
+.field textarea:focus+label,
+.field textarea:valid+label{
+    top:-14px;
+    font-size:12px;
+    color:var(--accent);
+}
+button{
+    padding:16px 44px;
     border:none;
     border-radius:50px;
     background:var(--accent);
@@ -153,309 +234,223 @@ section{
     cursor:pointer;
 }
 
-.hero img{
-    width:100%;
-    border-radius:30px;
-    box-shadow:0 40px 120px rgba(0,0,0,0.8);
-}
-
-/* =====================================================
-   TITLES
-===================================================== */
-h2{
-    font-size:38px;
-    margin-bottom:20px;
-}
-
-h2 i{
-    color:var(--accent);
-    margin-right:10px;
-}
-
-/* =====================================================
-   GRIDS
-===================================================== */
-.grid-3{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:30px;
-    margin-top:50px;
-}
-
-.grid-4{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:26px;
-    margin-top:50px;
-}
-
-/* =====================================================
-   CARD
-===================================================== */
-.card{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:26px;
-    padding:26px;
-    transition:0.4s;
-}
-
-.card:hover{
-    transform:translateY(-10px);
-    box-shadow:0 40px 120px rgba(0,0,0,0.8);
-}
-
-.card img{
-    width:100%;
-    border-radius:18px;
-    margin-bottom:18px;
-}
-
-.card h3{
-    color:var(--accent);
-    margin-bottom:10px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-/* =====================================================
-   LAW
-===================================================== */
-.law{
-    background:radial-gradient(circle at top,rgba(124,124,255,0.2),transparent 60%);
-}
-
-/* =====================================================
-   FEEDBACK
-===================================================== */
-.feedback{
-    max-width:820px;
-    margin-top:60px;
-    background:rgba(255,255,255,0.05);
-    border:1px solid var(--border);
-    border-radius:30px;
-    padding:50px;
-}
-
-.field{
-    position:relative;
-    margin-bottom:30px;
-}
-
-.field input,
-.field textarea{
-    width:100%;
-    background:none;
-    border:none;
-    border-bottom:1px solid rgba(255,255,255,0.3);
-    color:#fff;
-    font-size:16px;
-    padding:10px 0;
-}
-
-.field label{
-    position:absolute;
-    left:0;
-    top:10px;
-    opacity:0.6;
-    transition:0.3s;
-}
-
-.field input:focus + label,
-.field input:valid + label,
-.field textarea:focus + label,
-.field textarea:valid + label{
-    top:-14px;
-    font-size:12px;
-    color:var(--accent);
-}
-
-.feedback button{
-    padding:15px 44px;
-    border:none;
-    border-radius:50px;
-    background:var(--accent);
-    color:#fff;
-    font-weight:600;
-}
-
-/* =====================================================
+/* =========================================================
    FOOTER
-===================================================== */
+========================================================= */
 footer{
     padding:80px 6%;
     text-align:center;
     border-top:1px solid var(--border);
-    opacity:0.8;
+    opacity:.8;
 }
-
 </style>
 </head>
 <body>
-
-<div id="progress"></div>
 
 <nav>
 <div class="logo"><i class="fas fa-shield-halved"></i> DATA SECURITY</div>
 <ul>
 <li><a href="#about"><i class="fas fa-id-card"></i> Деректер</a></li>
 <li><a href="#risks"><i class="fas fa-bug"></i> Қауіптер</a></li>
-<li><a href="#law"><i class="fas fa-gavel"></i> Заң</a></li>
+<li><a href="#law"><i class="fas fa-gavel"></i> Заңдар</a></li>
 <li><a href="#protect"><i class="fas fa-lock"></i> Қорғау</a></li>
 <li><a href="#contact"><i class="fas fa-envelope"></i> Байланыс</a></li>
 </ul>
 </nav>
 
-<!-- =====================================================
-     HERO (ИИ-КАРТИНКА)
-===================================================== -->
 <section class="hero">
 <div>
 <h1>Дербес деректерді <span>қорғау</span></h1>
 <p>
-Цифрлық дәуірде жеке ақпарат — ең құнды ресурс.
-Бұл сайт дербес деректерді қорғау тақырыбын
-терең және визуалды түрде түсіндіреді.
+Бұл ауқымды веб-жоба дербес деректердің не екенін,
+олардың қандай қауіптерге ұшырайтынын,
+қалай қорғалатынын және Қазақстан Республикасындағы
+заңдық жауапкершілікті толық әрі визуалды түрде түсіндіреді.
 </p>
-<button>Бастау</button>
 </div>
-
-<img src="https://image.pollinations.ai/prompt/futuristic%20data%20security%20ai%20shield%20dark%20cyberpunk%20style">
+<img src="https://image.pollinations.ai/prompt/futuristic%20data%20security%20ai%20shield%20dark"
+onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80';">
 </section>
 
-<!-- =====================================================
-     ABOUT
-===================================================== -->
 <section id="about">
-<h2><i class="fas fa-id-card"></i> Дербес деректер</h2>
+<h2><i class="fas fa-id-card"></i> Дербес деректер туралы</h2>
+<div class="grid">
 
-<div class="grid-3">
-
-<div class="card">
-<img src="https://image.pollinations.ai/prompt/personal%20data%20protection%20identity%20ai%20illustration%20dark">
-<h3><i class="fas fa-user"></i> Жеке деректер</h3>
-<p>Аты-жөні, ЖСН, туған күні, мекенжай.</p>
+<div class="card flip-card">
+<div class="flip-inner">
+<div class="flip-front">
+<img src="https://image.pollinations.ai/prompt/personal%20data%20identity%20ai"
+onerror="this.src='https://images.unsplash.com/photo-1600267165477-6d4cc741b379?auto=format&fit=crop&w=800&q=80';">
+<h3>Жеке деректер</h3>
+<p>Азаматқа тікелей қатысты ақпарат.</p>
+</div>
+<div class="flip-back">
+<h4>Жеке деректер деген не?</h4>
+<p>
+Жеке деректер — бұл нақты бір тұлғаны анықтауға
+мүмкіндік беретін ақпараттар жиынтығы.
+Оған азаматтың аты-жөні, туған күні, ЖСН,
+тұрғылықты мекенжайы, телефон нөмірі және
+басқа да деректер жатады.
+</p>
+<p>
+Бұл мәліметтер дұрыс қорғалмаған жағдайда,
+алаяқтар тарапынан заңсыз пайдаланылып,
+азаматтың жеке өміріне қауіп төндіруі мүмкін.
+</p>
+</div>
+</div>
 </div>
 
-<div class="card">
-<img src="https://image.pollinations.ai/prompt/digital%20identity%20cyber%20data%20ai%20illustration">
-<h3><i class="fas fa-laptop-code"></i> Цифрлық деректер</h3>
-<p>IP, cookies, аккаунттар, логиндер.</p>
+<div class="card flip-card">
+<div class="flip-inner">
+<div class="flip-front">
+<img src="https://image.pollinations.ai/prompt/digital%20identity%20cyber%20ai"
+onerror="this.src='https://images.unsplash.com/photo-1510511450816-2f8b2c59e8fa?auto=format&fit=crop&w=800&q=80';">
+<h3>Цифрлық деректер</h3>
+<p>Интернеттегі іздер.</p>
 </div>
-
-<div class="card">
-<img src="https://image.pollinations.ai/prompt/financial%20data%20cyber%20security%20ai%20dark">
-<h3><i class="fas fa-credit-card"></i> Қаржылық деректер</h3>
-<p>Банк картасы, төлем тарихы.</p>
+<div class="flip-back">
+<h4>Цифрлық деректердің маңызы</h4>
+<p>
+Цифрлық деректер — бұл интернеттегі әрекеттер
+барысында қалыптасатын ақпараттар.
+Оларға IP-мекенжай, cookies, аккаунттар,
+іздеу тарихы және әлеуметтік желідегі
+жазбалар жатады.
+</p>
+<p>
+Цифрлық деректерді қорғау — қазіргі заманда
+киберқауіпсіздіктің негізгі бағыты.
+</p>
+</div>
+</div>
 </div>
 
 </div>
 </section>
 
-<!-- =====================================================
-     RISKS
-===================================================== -->
 <section id="risks">
 <h2><i class="fas fa-bug"></i> Қауіптер</h2>
+<div class="grid">
 
-<div class="grid-4">
-
-<div class="card">
-<img src="https://image.pollinations.ai/prompt/phishing%20attack%20cybercrime%20ai%20illustration">
-<h3><i class="fas fa-fish"></i> Фишинг</h3>
-<p>Жалған сайттар арқылы дерек ұрлау.</p>
+<div class="card flip-card">
+<div class="flip-inner">
+<div class="flip-front">
+<img src="https://image.pollinations.ai/prompt/phishing%20cybercrime%20ai"
+onerror="this.src='https://images.unsplash.com/photo-1584433144859-1fc3ab64a957?auto=format&fit=crop&w=800&q=80';">
+<h3>Фишинг</h3>
+<p>Жалған сайттар.</p>
+</div>
+<div class="flip-back">
+<h4>Фишинг қауіпі</h4>
+<p>
+Фишинг — бұл алаяқтардың адамдарды алдап,
+олардың жеке деректерін заңсыз иемдену тәсілі.
+Жиі жағдайда жалған банктік сайттар немесе
+хабарламалар арқылы жүзеге асады.
+</p>
+<p>
+Фишинг шабуылдарының салдары ауыр қаржылық
+шығындарға және жеке деректердің таралуына
+әкелуі мүмкін.
+</p>
+</div>
+</div>
 </div>
 
-<div class="card">
-<img src="https://image.pollinations.ai/prompt/hacker%20cyber%20attack%20dark%20ai%20art">
-<h3><i class="fas fa-user-secret"></i> Хакерлер</h3>
-<p>Аккаунт бұзу, дерек сату.</p>
+<div class="card flip-card">
+<div class="flip-inner">
+<div class="flip-front">
+<img src="https://image.pollinations.ai/prompt/hacker%20attack%20ai"
+onerror="this.src='https://images.unsplash.com/photo-1591696205602-2f950c417cb9?auto=format&fit=crop&w=800&q=80';">
+<h3>Хакерлер</h3>
+<p>Заңсыз қол жеткізу.</p>
 </div>
-
-<div class="card">
-<img src="https://image.pollinations.ai/prompt/malware%20virus%20computer%20ai%20illustration">
-<h3><i class="fas fa-skull"></i> Malware</h3>
-<p>Зиянды бағдарламалар.</p>
+<div class="flip-back">
+<h4>Хакерлік шабуылдар</h4>
+<p>
+Хакерлер — компьютерлік жүйелерге заңсыз
+кіру арқылы деректерді ұрлайтын тұлғалар.
+Олар банктік жүйелерге, аккаунттарға
+және мемлекеттік базаларға шабуыл жасайды.
+</p>
+<p>
+Хакерлік әрекеттер үшін қылмыстық
+жауапкершілік қарастырылған.
+</p>
 </div>
-
-<div class="card">
-<img src="https://image.pollinations.ai/prompt/public%20wifi%20cyber%20security%20ai">
-<h3><i class="fas fa-wifi"></i> Ашық Wi-Fi</h3>
-<p>Қорғалмаған желілер.</p>
+</div>
 </div>
 
 </div>
 </section>
 
-<!-- =====================================================
-     LAW
-===================================================== -->
-<section id="law" class="law">
+<section id="law">
 <h2><i class="fas fa-gavel"></i> Заңдар</h2>
+<div class="grid">
 
-<div class="grid-3">
-
-<div class="card">
-<img src="https://image.pollinations.ai/prompt/law%20data%20protection%20government%20ai">
+<div class="card flip-card">
+<div class="flip-inner">
+<div class="flip-front">
+<img src="https://image.pollinations.ai/prompt/data%20protection%20law%20ai"
+onerror="this.src='https://images.unsplash.com/photo-1589391886645-d51941baf7fb?auto=format&fit=crop&w=800&q=80';">
 <h3>ҚР Заңы</h3>
-<p>«Дербес деректер және оларды қорғау туралы» заң.</p>
+<p>Дербес деректерді қорғау.</p>
 </div>
-
-<div class="card">
-<img src="https://image.pollinations.ai/prompt/court%20justice%20cyber%20crime%20ai">
-<h3>Жауапкершілік</h3>
-<p>Айыппұл және қылмыстық жаза.</p>
+<div class="flip-back">
+<h4>Қазақстан Республикасының заңы</h4>
+<p>
+Қазақстан Республикасының «Дербес деректер
+және оларды қорғау туралы» заңы азаматтардың
+жеке ақпаратын қорғауға бағытталған.
+</p>
+<p>
+Бұл заң деректерді жинау, сақтау және тарату
+кезінде қауіпсіздік талаптарын сақтауды міндеттейді.
+</p>
 </div>
-
-<div class="card">
-<img src="https://image.pollinations.ai/prompt/human%20rights%20data%20privacy%20ai">
-<h3>Азамат құқығы</h3>
-<p>Жеке деректерді қорғау құқығы.</p>
+</div>
 </div>
 
 </div>
 </section>
 
-<!-- =====================================================
-     PROTECT
-===================================================== -->
 <section id="protect">
-<h2><i class="fas fa-shield"></i> Қорғау әдістері</h2>
+<h2><i class="fas fa-lock"></i> Қорғау әдістері</h2>
+<div class="grid">
 
-<div class="grid-3">
-
-<div class="card">
-<img src="https://image.pollinations.ai/prompt/strong%20password%20cyber%20security%20ai">
+<div class="card flip-card">
+<div class="flip-inner">
+<div class="flip-front">
+<img src="https://image.pollinations.ai/prompt/strong%20password%20cyber%20ai"
+onerror="this.src='https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?auto=format&fit=crop&w=800&q=80';">
 <h3>Күшті пароль</h3>
-<p>Күрделі және бірегей парольдер.</p>
+<p>Қорғаудың негізі.</p>
 </div>
-
-<div class="card">
-<img src="https://image.pollinations.ai/prompt/data%20encryption%20security%20ai">
-<h3>Шифрлау</h3>
-<p>Деректерді қорғау технологиясы.</p>
+<div class="flip-back">
+<h4>Пароль қауіпсіздігі</h4>
+<p>
+Күшті пароль кемінде 12 таңбадан тұрып,
+әріптерді, сандарды және арнайы белгілерді
+қамтуы тиіс.
+</p>
+<p>
+Бір парольді бірнеше жерде қолдануға болмайды.
+</p>
 </div>
-
-<div class="card">
-<img src="https://image.pollinations.ai/prompt/system%20update%20cyber%20security%20ai">
-<h3>Жаңарту</h3>
-<p>Жүйені үнемі жаңарту.</p>
+</div>
 </div>
 
 </div>
 </section>
 
-<!-- =====================================================
-     CONTACT
-===================================================== -->
 <section id="contact">
 <h2><i class="fas fa-envelope"></i> Кері байланыс</h2>
-
 <div class="feedback">
 
 <div class="field">
-<input type="text" required>
+<input required>
 <label>Атың</label>
 </div>
 
@@ -465,7 +460,7 @@ footer{
 </div>
 
 <div class="field">
-<textarea rows="4" required></textarea>
+<textarea rows="5" required></textarea>
 <label>Хабарлама</label>
 </div>
 
@@ -475,15 +470,8 @@ footer{
 </section>
 
 <footer>
-<p>© 2026 • Дербес деректерді қорғау • Оқу жобасы</p>
+<p>© 2026 • Дербес деректерді қорғау • Үлкен оқу жобасы</p>
 </footer>
-
-<script>
-window.addEventListener("scroll",()=>{
-const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
-document.getElementById("progress").style.width=(scrollY/h)*100+"%";
-});
-</script>
 
 </body>
 </html>
