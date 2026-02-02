@@ -11,261 +11,179 @@
 /* =========================
    GLOBAL
 ========================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+font-family:'Inter',sans-serif;
+background:#0e0e11;
+color:#eaeaf0;
+line-height:1.7;
+overflow-x:hidden
 }
-
-html { scroll-behavior: smooth; }
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: #0e0e11;
-    color: #eaeaf0;
-    line-height: 1.7;
-    overflow-x: hidden;
+:root{
+--accent:#7c7cff;
+--accent-soft:rgba(124,124,255,.15);
+--card-bg:rgba(255,255,255,.04);
+--border-soft:rgba(255,255,255,.08)
 }
-
-:root {
-    --accent: #7c7cff;
-    --accent-soft: rgba(124,124,255,0.15);
-    --card-bg: rgba(255,255,255,0.04);
-    --border-soft: rgba(255,255,255,0.08);
-}
-
-section {
-    padding: 120px 8%;
-}
-
-h1, h2, h3 {
-    font-weight: 800;
-    letter-spacing: -0.5px;
-}
-
-p {
-    max-width: 900px;
-    opacity: 0.85;
-    margin-top: 20px;
-}
+section{padding:120px 8%}
+h1,h2,h3{font-weight:800;letter-spacing:-.5px}
+p{max-width:950px;opacity:.85;margin-top:20px;line-height:1.8}
 
 /* =========================
    SUPER WOW BACKGROUND
 ========================== */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(
-        120deg,
-        rgba(124,124,255,0.15),
-        transparent,
-        rgba(124,124,255,0.12)
-    );
-    animation: bgMove 12s infinite alternate ease-in-out;
-    z-index: -1;
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:linear-gradient(120deg,rgba(124,124,255,.15),transparent,rgba(124,124,255,.12));
+animation:bgMove 12s infinite alternate ease-in-out;
+z-index:-1
 }
-
-@keyframes bgMove {
-    from { transform: translateX(-5%); }
-    to { transform: translateX(5%); }
-}
+@keyframes bgMove{from{transform:translateX(-5%)}to{transform:translateX(5%)}}
 
 /* =========================
    NAV
 ========================== */
-nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 20px 8%;
-    display: flex;
-    justify-content: space-between;
-    backdrop-filter: blur(12px);
-    background: rgba(14,14,17,0.6);
-    z-index: 1000;
-    border-bottom: 1px solid var(--border-soft);
+nav{
+position:fixed;top:0;width:100%;
+padding:20px 8%;
+display:flex;justify-content:space-between;
+backdrop-filter:blur(12px);
+background:rgba(14,14,17,.6);
+border-bottom:1px solid var(--border-soft);
+z-index:1000
 }
-
-nav .logo {
-    font-weight: 800;
-    color: var(--accent);
-}
-
-nav ul {
-    display: flex;
-    list-style: none;
-    gap: 30px;
-}
-
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    opacity: 0.7;
-    transition: 0.3s;
-}
-
-nav ul li a:hover {
-    opacity: 1;
-    color: var(--accent);
-}
+nav .logo{font-weight:800;color:var(--accent)}
+nav ul{display:flex;gap:30px;list-style:none}
+nav ul a{color:#fff;text-decoration:none;opacity:.7}
+nav ul a:hover{opacity:1;color:var(--accent)}
 
 /* =========================
    HERO
 ========================== */
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
+.hero{min-height:100vh;display:flex;align-items:center}
+.hero h1{font-size:64px;margin-bottom:30px}
+.hero h1 span{color:var(--accent)}
+.hero button{
+margin-top:40px;padding:16px 36px;
+border-radius:40px;border:none;
+background:var(--accent);color:#fff;
+cursor:pointer;transition:.4s
 }
-
-.hero h1 {
-    font-size: 64px;
-    margin-bottom: 30px;
-}
-
-.hero h1 span { color: var(--accent); }
-
-.hero button {
-    margin-top: 40px;
-    padding: 16px 36px;
-    border-radius: 40px;
-    border: none;
-    background: var(--accent);
-    color: #fff;
-    cursor: pointer;
-    transition: 0.4s;
-}
-
-.hero button:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px var(--accent-soft);
-}
+.hero button:hover{transform:translateY(-4px);box-shadow:0 20px 40px var(--accent-soft)}
 
 /* =========================
    CARDS
 ========================== */
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-    gap: 30px;
-    margin-top: 80px;
+.cards,.risk-list,.protection-grid,.law-cards,.tips-cards{
+display:grid;gap:30px;margin-top:80px
 }
-
-.card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-soft);
-    border-radius: 22px;
-    padding: 40px;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: 0.5s;
+.cards{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.risk-list{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.protection-grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.law-cards{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.tips-cards{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card,.risk-item,.protect-card,.law-card,.tip-card{
+background:var(--card-bg);
+border:1px solid var(--border-soft);
+border-radius:26px;
+padding:45px;
+opacity:0;transform:translateY(40px);
+transition:.6s
 }
-
-.card h3 { color: var(--accent); }
+.card h3,.risk-item h3,.protect-card h3,.law-card h3,.tip-card h3{color:var(--accent)}
+.protect-card{cursor:pointer}
+.protect-card.active{
+transform:scale(1.05);
+box-shadow:0 40px 80px rgba(0,0,0,.6)
+}
 
 /* =========================
-   RISKS
+   DARK SECTION
 ========================== */
-.dark-section { position: relative; overflow: hidden; }
-
-.parallax {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at top, rgba(124,124,255,0.2), transparent 60%);
+.dark-section{position:relative;overflow:hidden}
+.parallax{
+position:absolute;inset:0;
+background:radial-gradient(circle at top,rgba(124,124,255,.25),transparent 60%)
 }
-
-.risk-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
-    gap: 40px;
-    margin-top: 80px;
-}
-
-.risk-item {
-    background: var(--card-bg);
-    border: 1px solid var(--border-soft);
-    border-radius: 26px;
-    padding: 45px;
-    opacity: 0;
-    transform: translateY(50px);
-    transition: 0.5s;
-}
-
-.risk-item h3 { color: var(--accent); }
 
 /* =========================
-   PROTECTION
+   FEEDBACK FORM
 ========================== */
-.protection-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-    gap: 35px;
-    margin-top: 80px;
+.feedback{
+max-width:700px;
+margin-top:80px;
+background:rgba(255,255,255,.05);
+border:1px solid var(--border-soft);
+border-radius:30px;
+padding:60px;
+backdrop-filter:blur(12px)
 }
-
-.protect-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-soft);
-    border-radius: 26px;
-    padding: 50px;
-    cursor: pointer;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: 0.5s;
+.feedback .field{
+position:relative;margin-bottom:35px
 }
-
-.protect-card.active {
-    transform: scale(1.05);
-    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+.feedback input,.feedback textarea{
+width:100%;
+background:none;
+border:none;
+border-bottom:1px solid rgba(255,255,255,.3);
+padding:10px 0;
+color:#fff;font-size:16px;
+outline:none
 }
-
-.protect-card h3 { color: var(--accent); }
-
-/* =========================
-   MICRO INTERACTION
-========================== */
-button:active,
-.protect-card:active {
-    transform: scale(0.97);
+.feedback label{
+position:absolute;left:0;top:10px;
+opacity:.6;transition:.3s;
+pointer-events:none
+}
+.feedback input:focus+label,
+.feedback input:valid+label,
+.feedback textarea:focus+label,
+.feedback textarea:valid+label{
+top:-14px;font-size:12px;color:var(--accent)
+}
+.feedback button{
+margin-top:20px;
+padding:14px 32px;
+border-radius:40px;border:none;
+background:var(--accent);
+color:#fff;cursor:pointer
+}
+.success{
+display:none;
+margin-top:20px;
+color:#7cff9d
 }
 
 /* =========================
    FOOTER
 ========================== */
-footer {
-    padding: 80px 8%;
-    border-top: 1px solid var(--border-soft);
-    text-align: center;
-    opacity: 0.7;
+footer{
+padding:80px 8%;
+border-top:1px solid var(--border-soft);
+text-align:center;
+opacity:.7
 }
 
 /* =========================
-   SCROLL PROGRESS
+   WOW EFFECTS
 ========================== */
-#progress-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 3px;
-    width: 0%;
-    background: linear-gradient(90deg,#7c7cff,#b6b6ff);
-    z-index: 2000;
+#progress-bar{
+position:fixed;top:0;left:0;height:3px;width:0%;
+background:linear-gradient(90deg,#7c7cff,#b6b6ff);
+z-index:2000
 }
-
-/* =========================
-   CURSOR GLOW
-========================== */
-.cursor-glow {
-    position: fixed;
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(124,124,255,0.25), transparent 70%);
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    z-index: 0;
+.cursor-glow{
+position:fixed;width:120px;height:120px;
+border-radius:50%;
+background:radial-gradient(circle,rgba(124,124,255,.25),transparent 70%);
+pointer-events:none;
+transform:translate(-50%,-50%);
+z-index:0
 }
+button:active,.protect-card:active{transform:scale(.97)}
 </style>
 </head>
 
@@ -279,7 +197,10 @@ footer {
 <ul>
 <li><a href="#about">Тақырып</a></li>
 <li><a href="#risks">Қауіптер</a></li>
+<li><a href="#law">Заң</a></li>
 <li><a href="#protection">Қорғау</a></li>
+<li><a href="#tips">Кеңестер</a></li>
+<li><a href="#feedback">Кері байланыс</a></li>
 </ul>
 </nav>
 
@@ -287,82 +208,91 @@ footer {
 <div>
 <h1>Дербес деректерді <span>қорғау</span></h1>
 <p>
-Дербес деректер — адамның цифрлық әлемдегі жеке өмірі.
-Бұл сайтта деректердің түрлері, қауіптері, заңдық маңызы
-және оларды қорғаудың заманауи әдістері толық қарастырылады.
+Дербес деректер — адамның цифрлық кеңістіктегі жеке өмірі. 
+Бұл сайтта қауіптер, заңдар, жауапкершілік, кеңестер мен қорғау жолдары толық қарастырылған.
 </p>
-<button onclick="document.getElementById('about').scrollIntoView()">Бастау</button>
+<button onclick="about.scrollIntoView()">Бастау</button>
 </div>
 </section>
 
 <section id="about">
 <h2>Дербес деректер деген не?</h2>
 <p>
-Дербес деректер — белгілі бір адамды анықтауға мүмкіндік
-беретін кез келген ақпарат. Бұл деректерді қорғау Қазақстан
-Республикасының заңнамасында да қарастырылған.
+Дербес деректер — белгілі бір адамды тікелей немесе жанама түрде анықтауға мүмкіндік беретін ақпарат. 
+Оларға аты-жөні, туған күні, ЖСН, мекенжай, цифрлық профайл, банк деректері жатады.
+Дербес деректерді қорғау — әр азаматтың құқығы және жауапкершілігі.
 </p>
 
 <div class="cards">
-<div class="card reveal">
-<h3>Жеке деректер</h3>
-<p>Аты-жөні, туған күні, ЖСН, мекенжай.</p>
-</div>
-<div class="card reveal">
-<h3>Цифрлық деректер</h3>
-<p>IP-мекенжай, аккаунттар, cookies.</p>
-</div>
-<div class="card reveal">
-<h3>Қаржылық деректер</h3>
-<p>Банк картасы, онлайн төлемдер.</p>
-</div>
+<div class="card reveal"><h3>Жеке деректер</h3><p>Аты-жөні, туған күні, ЖСН, мекенжай.</p></div>
+<div class="card reveal"><h3>Цифрлық деректер</h3><p>IP, аккаунттар, cookies, әлеуметтік желі профайлы.</p></div>
+<div class="card reveal"><h3>Қаржылық деректер</h3><p>Банк картасы, онлайн төлемдер, транзакциялар.</p></div>
 </div>
 </section>
 
 <section id="risks" class="dark-section">
 <div class="parallax"></div>
-<h2>Негізгі қауіптер</h2>
+<h2>Қауіптер</h2>
 <p>
-Интернеттегі алаяқтық әдістер күн сайын дамуда.
-Пайдаланушы сақ болмаса, дербес деректер оңай қолды болуы мүмкін.
+Интернеттегі алаяқтық әдістер жыл сайын күрделене түсуде. Пайдаланушы сақ болмаса, дербес деректері оңай қолды болуы мүмкін.
+</p>
+<div class="risk-list">
+<div class="risk-item reveal"><h3>Фишинг</h3><p>Жалған сайттар мен хаттар арқылы жеке деректерді ұрлау.</p></div>
+<div class="risk-item reveal"><h3>Хакерлік шабуыл</h3><p>Жүйелерге заңсыз кіру, деректерді бұзу.</p></div>
+<div class="risk-item reveal"><h3>Әлеуметтік инженерия</h3><p>Сенімге кіріп ақпарат алу әдістері.</p></div>
+<div class="risk-item reveal"><h3>Құпиясөзді ұрлау</h3><p>Күшті пароль қолданбау арқылы қауіп төндіру.</p></div>
+</div>
+</section>
+
+<section id="law">
+<h2>Заң және жауапкершілік</h2>
+<p>
+Қазақстан Республикасында дербес деректерді қорғау «Дербес деректер және оларды қорғау туралы» заңымен реттеледі. 
+Дербес деректерді заңсыз жинау немесе тарату — әкімшілік немесе қылмыстық жауапкершілікке әкеледі.
 </p>
 
-<div class="risk-list">
-<div class="risk-item reveal">
-<h3>Фишинг</h3>
-<p>Жалған сайттар мен хаттар арқылы дерек ұрлау.</p>
-</div>
-<div class="risk-item reveal">
-<h3>Хакерлік шабуыл</h3>
-<p>Жүйелерге заңсыз кіру.</p>
-</div>
-<div class="risk-item reveal">
-<h3>Әлеуметтік инженерия</h3>
-<p>Сенімге кіру арқылы ақпарат алу.</p>
-</div>
+<div class="law-cards">
+<div class="law-card reveal"><h3>Мақала 137</h3><p>Дербес деректерді заңсыз жинау және өңдеуге тыйым салынады.</p></div>
+<div class="law-card reveal"><h3>Мақала 138</h3><p>Дербес деректерді жариялау немесе сату заңға қайшы.</p></div>
+<div class="law-card reveal"><h3>Мақала 139</h3><p>Жеке деректерді бұзған жағдайда жауапкершілік көзделген.</p></div>
 </div>
 </section>
 
 <section id="protection">
 <h2>Қорғау әдістері</h2>
 <p>
-Қарапайым қауіпсіздік ережелерін сақтау —
-дербес деректерді қорғаудың ең тиімді жолы.
+Қарапайым қауіпсіздік ережелерін сақтау — дербес деректерді қорғаудың ең тиімді жолы. 
+Төмендегі әдістерді күнделікті қолданған жөн.
 </p>
-
 <div class="protection-grid">
-<div class="protect-card reveal" onclick="this.classList.toggle('active')">
-<h3>Күшті пароль</h3>
-<p>Ұзын және бірегей парольдер қолдану.</p>
+<div class="protect-card reveal" onclick="this.classList.toggle('active')"><h3>Күшті пароль</h3><p>Ұзын және бірегей парольдер қолдану.</p></div>
+<div class="protect-card reveal" onclick="this.classList.toggle('active')"><h3>2FA</h3><p>Қос факторлы аутентификация енгізу.</p></div>
+<div class="protect-card reveal" onclick="this.classList.toggle('active')"><h3>VPN</h3><p>Интернет трафигін шифрлау.</p></div>
+<div class="protect-card reveal" onclick="this.classList.toggle('active')"><h3>Антивирус</h3><p>Компьютер мен смартфонды қорғау.</p></div>
+<div class="protect-card reveal" onclick="this.classList.toggle('active')"><h3>Жүйелі резервтік көшіру</h3><p>Деректердің жоғалуына жол бермеу.</p></div>
 </div>
-<div class="protect-card reveal" onclick="this.classList.toggle('active')">
-<h3>2FA</h3>
-<p>Қос факторлы қорғау.</p>
+</section>
+
+<section id="tips">
+<h2>Кеңестер</h2>
+<p>Дербес деректерді қорғау бойынша практикалық кеңестер.</p>
+<div class="tips-cards">
+<div class="tip-card reveal"><h3>Жеке ақпаратты аз жариялаңыз</h3><p>Әлеуметтік желіде жеке мәліметтерді тек қажет болғанда ғана бөлісу.</p></div>
+<div class="tip-card reveal"><h3>Құпиясөз менеджерін пайдаланыңыз</h3><p>Барлық аккаунттарға қауіпсіз парольдер сақтау.</p></div>
+<div class="tip-card reveal"><h3>Құпия сұрақтарды қауіпсіз қою</h3><p>Қауіпсіз сұрақтар арқылы аккаунттарды қорғау.</p></div>
+<div class="tip-card reveal"><h3>Браузер мен қосымшаларды жаңартыңыз</h3><p>Қауіпсіздікті арттыру үшін жүйені үнемі жаңарту.</p></div>
 </div>
-<div class="protect-card reveal" onclick="this.classList.toggle('active')">
-<h3>VPN</h3>
-<p>Интернет трафигін шифрлау.</p>
-</div>
+</section>
+
+<section id="feedback">
+<h2>Кері байланыс</h2>
+<p>Сұрақтарыңыз немесе пікірлеріңіз болса, төмендегі форманы толтырыңыз.</p>
+<div class="feedback">
+<div class="field"><input type="text" required><label>Аты-жөніңіз</label></div>
+<div class="field"><input type="email" required><label>Email</label></div>
+<div class="field"><textarea rows="4" required></textarea><label>Хабарлама</label></div>
+<button onclick="sendForm()">Жіберу</button>
+<div class="success">✔ Хабарлама сәтті жіберілді!</div>
 </div>
 </section>
 
@@ -373,43 +303,38 @@ footer {
 
 <script>
 /* REVEAL */
-const reveals = document.querySelectorAll('.reveal');
-window.addEventListener('scroll', () => {
-reveals.forEach(el => {
-if (el.getBoundingClientRect().top < window.innerHeight - 100) {
-el.style.opacity = 1;
-el.style.transform = "translateY(0)";
-el.style.transition = "1s";
+const reveals=document.querySelectorAll('.reveal');
+window.addEventListener('scroll',()=>{
+reveals.forEach(el=>{
+if(el.getBoundingClientRect().top<window.innerHeight-100){
+el.style.opacity=1;el.style.transform="translateY(0)";
 }
 });
 });
 
 /* PROGRESS */
-window.addEventListener("scroll", () => {
-const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-document.getElementById("progress-bar").style.width =
-(document.documentElement.scrollTop / h) * 100 + "%";
+window.addEventListener("scroll",()=>{
+const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+progressBar.style.width=(document.documentElement.scrollTop/h)*100+"%";
 });
 
-/* CURSOR GLOW */
-const glow = document.querySelector(".cursor-glow");
-document.addEventListener("mousemove", e => {
-glow.style.left = e.clientX + "px";
-glow.style.top = e.clientY + "px";
+/* CURSOR */
+const glow=document.querySelector(".cursor-glow");
+document.addEventListener("mousemove",e=>{
+glow.style.left=e.clientX+"px";glow.style.top=e.clientY+"px";
 });
 
 /* MAGNETIC */
-document.querySelectorAll('.card,.risk-item,.protect-card').forEach(card => {
-card.addEventListener('mousemove', e => {
-const r = card.getBoundingClientRect();
-const x = e.clientX - r.left - r.width / 2;
-const y = e.clientY - r.top - r.height / 2;
-card.style.transform = `translate(${x*0.08}px,${y*0.08}px)`;
+document.querySelectorAll('.card,.risk-item,.protect-card,.law-card,.tip-card').forEach(card=>{
+card.addEventListener('mousemove',e=>{
+const r=card.getBoundingClientRect();
+card.style.transform=`translate(${(e.clientX-r.left-r.width/2)*0.08}px,${(e.clientY-r.top-r.height/2)*0.08}px)`;
 });
-card.addEventListener('mouseleave', () => {
-card.style.transform = 'translate(0,0)';
+card.addEventListener('mouseleave',()=>card.style.transform='translate(0,0)');
 });
-});
+
+/* FEEDBACK */
+function sendForm(){document.querySelector('.success').style.display="block";}
 </script>
 
 </body>
