@@ -1,618 +1,416 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Дербес деректерді қорғау</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Дербес деректерді қорғау</title>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-
-    <style>
-        /* =========================
-           GLOBAL STYLES
-        ========================== */
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0e0e11;
-            color: #eaeaf0;
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        :root {
-            --accent: #7c7cff;
-            --accent-soft: rgba(124,124,255,0.15);
-            --bg-card: rgba(255,255,255,0.03);
-            --border-soft: rgba(255,255,255,0.08);
-        }
-
-        section {
-            padding: 120px 8%;
-            position: relative;
-        }
-
-        h1, h2, h3 {
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        p {
-            opacity: 0.85;
-            max-width: 700px;
-        }
-
-        /* =========================
-           NAVIGATION
-        ========================== */
-
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(12px);
-            background: rgba(14,14,17,0.6);
-            z-index: 1000;
-            border-bottom: 1px solid var(--border-soft);
-        }
-
-        nav .logo {
-            font-weight: 800;
-            font-size: 18px;
-            color: var(--accent);
-            letter-spacing: 1px;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: #eaeaf0;
-            font-size: 14px;
-            opacity: 0.7;
-            transition: 0.3s;
-        }
-
-        nav ul li a:hover {
-            opacity: 1;
-            color: var(--accent);
-        }
-
-        /* =========================
-           HERO SECTION
-        ========================== */
-
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-        }
-
-        .hero-content {
-            max-width: 900px;
-            animation: fadeUp 1.2s ease forwards;
-        }
-
-        .hero h1 {
-            font-size: 64px;
-            margin-bottom: 30px;
-        }
-
-        .hero h1 span {
-            color: var(--accent);
-        }
-
-        .hero p {
-            font-size: 18px;
-            margin-bottom: 40px;
-        }
-
-        .hero button {
-            padding: 16px 36px;
-            background: var(--accent);
-            border: none;
-            color: #fff;
-            font-size: 15px;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: 0.4s;
-        }
-
-        .hero button:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px var(--accent-soft);
-        }
-
-        /* =========================
-           INFO CARDS
-        ========================== */
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 30px;
-            margin-top: 80px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-soft);
-            border-radius: 20px;
-            padding: 40px;
-            transition: 0.4s;
-            opacity: 0;
-            transform: translateY(40px);
-        }
-
-        .card h3 {
-            margin-bottom: 20px;
-            font-size: 22px;
-            color: var(--accent);
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-        }
-
-        /* =========================
-           ANIMATIONS
-        ========================== */
-
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- NAV -->
-    <nav>
-        <div class="logo">DATA•SECURITY</div>
-        <ul>
-            <li><a href="#about">Тақырып</a></li>
-            <li><a href="#types">Түрлері</a></li>
-            <li><a href="#risks">Қауіптер</a></li>
-        </ul>
-    </nav>
-
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Дербес деректерді <span>қорғау</span></h1>
-            <p>
-                Қазіргі цифрлық әлемде дербес деректер — ең құнды ақпараттардың бірі.
-                Бұл сайтта сіз дербес деректердің не екенін, оларды қорғаудың маңызын
-                және қауіпсіздік әдістерін білесіз.
-            </p>
-            <button onclick="scrollToSection()">Бастау</button>
-        </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about">
-        <h2>Дербес деректер деген не?</h2>
-        <p>
-            Дербес деректер — белгілі бір адамға тікелей немесе жанама түрде
-            қатысты кез келген ақпарат. Бұл мәліметтер адамның жеке басын
-            анықтауға мүмкіндік береді.
-        </p>
-
-        <div class="cards">
-            <div class="card reveal">
-                <h3>Жеке ақпарат</h3>
-                <p>Аты-жөні, туған күні, ЖСН, мекенжайы сияқты мәліметтер.</p>
-            </div>
-
-            <div class="card reveal">
-                <h3>Цифрлық деректер</h3>
-                <p>IP-мекенжай, логиндер, парольдер, cookies.</p>
-            </div>
-
-            <div class="card reveal">
-                <h3>Қаржылық деректер</h3>
-                <p>Банк картасы, төлем тарихы, есепшоттар.</p>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        function scrollToSection() {
-            document.getElementById("about").scrollIntoView({ behavior: "smooth" });
-        }
-
-        // Scroll reveal animation
-        const reveals = document.querySelectorAll('.reveal');
-
-        function revealOnScroll() {
-            for (let i = 0; i < reveals.length; i++) {
-                const windowHeight = window.innerHeight;
-                const elementTop = reveals[i].getBoundingClientRect().top;
-                const elementVisible = 100;
-
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].style.opacity = "1";
-                    reveals[i].style.transform = "translateY(0)";
-                    reveals[i].style.transition = "1s";
-                }
-            }
-        }
-
-        window.addEventListener("scroll", revealOnScroll);
-    </script>
-
-</body>
-</html>
-<!-- =========================
-     RISKS SECTION
-========================== -->
-<section id="risks" class="dark-section">
-    <div class="parallax"></div>
-
-    <div class="content">
-        <h2 class="section-title">Дербес деректерге төнетін қауіптер</h2>
-        <p class="section-desc">
-            Интернеттің дамуы дербес деректерді қорғау мәселесін өзекті етті.
-            Күн сайын миллиондаған адамдар өз ақпаратын онлайн платформаларға
-            енгізеді. Егер бұл деректер дұрыс қорғалмаса, түрлі қауіптерге
-            ұшырауы мүмкін.
-        </p>
-
-        <div class="risk-list">
-            <div class="risk-item reveal">
-                <h3>Фишинг</h3>
-                <p>
-                    Фишинг — алаяқтардың жалған сайттар немесе электрондық
-                    хаттар арқылы пайдаланушының логині мен паролін ұрлауы.
-                    Бұл көбінесе банктердің, әлеуметтік желілердің немесе
-                    мемлекеттік қызметтердің атынан жасалады.
-                </p>
-            </div>
-
-            <div class="risk-item reveal">
-                <h3>Хакерлік шабуылдар</h3>
-                <p>
-                    Хакерлер жүйелерге заңсыз кіру арқылы дерекқорларды
-                    бұзып, пайдаланушылардың жеке мәліметтерін таратады
-                    немесе сатады. Мұндай шабуылдар ірі компанияларға да,
-                    қарапайым адамдарға да қауіп төндіреді.
-                </p>
-            </div>
-
-            <div class="risk-item reveal">
-                <h3>Деректердің ағып кетуі</h3>
-                <p>
-                    Кейде деректердің таралуы техникалық қателіктерден,
-                    әлсіз парольдерден немесе ішкі қауіпсіздік жүйесінің
-                    болмауынан орын алады. Бұл пайдаланушыларға үлкен
-                    зиян келтіруі мүмкін.
-                </p>
-            </div>
-
-            <div class="risk-item reveal">
-                <h3>Әлеуметтік инженерия</h3>
-                <p>
-                    Бұл әдісте қаскөйлер адамның сеніміне кіріп,
-                    ақпаратты өз еркімен беруге мәжбүрлейді.
-                    Телефон қоңыраулары, жалған қолдау қызметтері —
-                    осы тәсілдің мысалдары.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
 /* =========================
-   RISKS SECTION STYLES
+   GLOBAL
 ========================== */
-
-.dark-section {
-    position: relative;
-    overflow: hidden;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.parallax {
-    position: absolute;
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #0e0e11;
+    color: #eaeaf0;
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+:root {
+    --accent: #7c7cff;
+    --accent-soft: rgba(124,124,255,0.15);
+    --card-bg: rgba(255,255,255,0.04);
+    --border-soft: rgba(255,255,255,0.08);
+}
+
+section {
+    padding: 120px 8%;
+}
+
+h1, h2, h3 {
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+p {
+    max-width: 900px;
+    opacity: 0.85;
+    margin-top: 20px;
+}
+
+/* =========================
+   SUPER WOW BACKGROUND
+========================== */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        rgba(124,124,255,0.15),
+        transparent,
+        rgba(124,124,255,0.12)
+    );
+    animation: bgMove 12s infinite alternate ease-in-out;
+    z-index: -1;
+}
+
+@keyframes bgMove {
+    from { transform: translateX(-5%); }
+    to { transform: translateX(5%); }
+}
+
+/* =========================
+   NAV
+========================== */
+nav {
+    position: fixed;
     top: 0;
-    left: 0;
     width: 100%;
-    height: 120%;
-    background: radial-gradient(circle at top, rgba(124,124,255,0.15), transparent 60%);
-    transform: translateY(0);
-    z-index: 0;
+    padding: 20px 8%;
+    display: flex;
+    justify-content: space-between;
+    backdrop-filter: blur(12px);
+    background: rgba(14,14,17,0.6);
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-soft);
 }
 
-.content {
-    position: relative;
-    z-index: 1;
+nav .logo {
+    font-weight: 800;
+    color: var(--accent);
 }
 
-.section-title {
-    font-size: 48px;
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.7;
+    transition: 0.3s;
+}
+
+nav ul li a:hover {
+    opacity: 1;
+    color: var(--accent);
+}
+
+/* =========================
+   HERO
+========================== */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero h1 {
+    font-size: 64px;
     margin-bottom: 30px;
 }
 
-.section-desc {
-    font-size: 17px;
-    margin-bottom: 80px;
-    max-width: 800px;
+.hero h1 span { color: var(--accent); }
+
+.hero button {
+    margin-top: 40px;
+    padding: 16px 36px;
+    border-radius: 40px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.hero button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px var(--accent-soft);
+}
+
+/* =========================
+   CARDS
+========================== */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+    gap: 30px;
+    margin-top: 80px;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-soft);
+    border-radius: 22px;
+    padding: 40px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 0.5s;
+}
+
+.card h3 { color: var(--accent); }
+
+/* =========================
+   RISKS
+========================== */
+.dark-section { position: relative; overflow: hidden; }
+
+.parallax {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top, rgba(124,124,255,0.2), transparent 60%);
 }
 
 .risk-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
     gap: 40px;
+    margin-top: 80px;
 }
 
 .risk-item {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-soft);
+    border-radius: 26px;
     padding: 45px;
-    backdrop-filter: blur(10px);
-    transition: 0.5s;
     opacity: 0;
     transform: translateY(50px);
+    transition: 0.5s;
 }
 
-.risk-item h3 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: var(--accent);
-}
+.risk-item h3 { color: var(--accent); }
 
-.risk-item:hover {
-    transform: translateY(-12px) scale(1.02);
-    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
-}
-</style>
-
-<script>
 /* =========================
-   PARALLAX EFFECT
+   PROTECTION
 ========================== */
-
-window.addEventListener("scroll", () => {
-    const parallax = document.querySelector(".parallax");
-    let offset = window.pageYOffset;
-    parallax.style.transform = "translateY(" + offset * 0.25 + "px)";
-});
-</script>
-
-<!-- =========================
-     EDUCATIONAL BLOCK
-========================== -->
-<section>
-    <h2>Неліктен дербес деректерді қорғау маңызды?</h2>
-    <p>
-        Дербес деректер адамның жеке өмірімен тікелей байланысты.
-        Олардың таралуы қаржылық шығындарға, беделдің түсуіне,
-        психологиялық қысымға әкелуі мүмкін.
-    </p>
-
-    <div class="cards">
-        <div class="card reveal">
-            <h3>Қаржылық қауіпсіздік</h3>
-            <p>
-                Банк деректері ұрланған жағдайда, алаяқтар
-                есепшоттағы қаражатты пайдалана алады.
-            </p>
-        </div>
-
-        <div class="card reveal">
-            <h3>Жеке өмір</h3>
-            <p>
-                Хаттар, фотолар, жеке хабарламалар —
-                адамның жеке кеңістігі болып табылады.
-            </p>
-        </div>
-
-        <div class="card reveal">
-            <h3>Құқықтық жауапкершілік</h3>
-            <p>
-                Кейбір жағдайларда деректерді заңсыз пайдалану
-                қылмыстық жауапкершілікке әкеледі.
-            </p>
-        </div>
-    </div>
-</section>
-<!-- =========================
-     PROTECTION METHODS
-========================== -->
-<section id="protection">
-    <h2>Дербес деректерді қорғау әдістері</h2>
-    <p>
-        Дербес деректерді қорғау үшін әрбір пайдаланушы
-        негізгі киберқауіпсіздік ережелерін білуі қажет.
-        Төменде ең тиімді және кең таралған әдістер ұсынылған.
-    </p>
-
-    <div class="protection-grid">
-        <div class="protect-card reveal" onclick="toggleActive(this)">
-            <h3>Күшті парольдер</h3>
-            <p>
-                Күрделі парольдер әріптерден, сандардан және
-                арнайы белгілерден тұруы тиіс. Бір парольді
-                бірнеше сайтта қолдануға болмайды.
-            </p>
-        </div>
-
-        <div class="protect-card reveal" onclick="toggleActive(this)">
-            <h3>Екі факторлы аутентификация (2FA)</h3>
-            <p>
-                2FA аккаунтқа кіру кезінде қосымша растауды
-                талап етеді. Бұл SMS, мобильді қосымша немесе
-                биометриялық дерек болуы мүмкін.
-            </p>
-        </div>
-
-        <div class="protect-card reveal" onclick="toggleActive(this)">
-            <h3>Антивирустық бағдарламалар</h3>
-            <p>
-                Антивирус зиянды бағдарламаларды анықтап,
-                компьютер мен смартфонды қорғайды.
-                Оларды үнемі жаңартып отыру маңызды.
-            </p>
-        </div>
-
-        <div class="protect-card reveal" onclick="toggleActive(this)">
-            <h3>VPN қолдану</h3>
-            <p>
-                VPN интернеттегі трафикті шифрлап,
-                қоғамдық Wi-Fi желілерінде қауіпсіздікті
-                қамтамасыз етеді.
-            </p>
-        </div>
-
-        <div class="protect-card reveal" onclick="toggleActive(this)">
-            <h3>Жаңартулар</h3>
-            <p>
-                Операциялық жүйе мен қосымшалардың жаңартулары
-                қауіпсіздік осалдықтарын жабады.
-            </p>
-        </div>
-
-        <div class="protect-card reveal" onclick="toggleActive(this)">
-            <h3>Сақтық</h3>
-            <p>
-                Белгісіз сілтемелерге өтпеу, күмәнді файлдарды
-                жүктемеу — деректерді қорғаудың негізгі жолы.
-            </p>
-        </div>
-    </div>
-</section>
-
-<style>
-/* =========================
-   PROTECTION SECTION
-========================== */
-
 .protection-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
     gap: 35px;
     margin-top: 80px;
 }
 
 .protect-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: var(--card-bg);
+    border: 1px solid var(--border-soft);
     border-radius: 26px;
     padding: 50px;
     cursor: pointer;
-    transition: 0.5s;
-    position: relative;
-    overflow: hidden;
     opacity: 0;
     transform: translateY(40px);
-}
-
-.protect-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at top left, rgba(124,124,255,0.2), transparent 60%);
-    opacity: 0;
     transition: 0.5s;
-}
-
-.protect-card:hover::after,
-.protect-card.active::after {
-    opacity: 1;
-}
-
-.protect-card h3 {
-    font-size: 23px;
-    margin-bottom: 20px;
-    color: var(--accent);
 }
 
 .protect-card.active {
     transform: scale(1.05);
     box-shadow: 0 40px 80px rgba(0,0,0,0.6);
 }
-</style>
 
-<script>
+.protect-card h3 { color: var(--accent); }
+
 /* =========================
-   INTERACTIVE CARDS
+   MICRO INTERACTION
 ========================== */
-
-function toggleActive(element) {
-    element.classList.toggle("active");
+button:active,
+.protect-card:active {
+    transform: scale(0.97);
 }
-</script>
 
-<!-- =========================
-     FINAL MESSAGE
-========================== -->
-<section>
-    <h2>Қорытынды</h2>
-    <p>
-        Дербес деректерді қорғау — әрбір адамның жауапкершілігі.
-        Цифрлық технологиялар дамыған сайын, қауіптер де арта түсуде.
-        Сондықтан ақпараттық қауіпсіздік ережелерін сақтау —
-        заманауи қоғамның маңызды талабы.
-    </p>
-
-    <p>
-        Бұл веб-сайт дербес деректердің маңызын түсінуге,
-        қауіптерді анықтауға және олардан қорғану жолдарын
-        үйренуге көмектеседі.
-    </p>
-</section>
-
-<!-- =========================
-     FOOTER
-========================== -->
-<footer>
-    <p>© 2026 | Дербес деректерді қорғау</p>
-    <span>Ақпараттық қауіпсіздік бойынша оқу жобасы</span>
-</footer>
-
-<style>
 /* =========================
    FOOTER
 ========================== */
-
 footer {
     padding: 80px 8%;
-    border-top: 1px solid rgba(255,255,255,0.08);
+    border-top: 1px solid var(--border-soft);
     text-align: center;
     opacity: 0.7;
 }
 
-footer span {
-    display: block;
-    margin-top: 10px;
-    font-size: 14px;
+/* =========================
+   SCROLL PROGRESS
+========================== */
+#progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg,#7c7cff,#b6b6ff);
+    z-index: 2000;
+}
+
+/* =========================
+   CURSOR GLOW
+========================== */
+.cursor-glow {
+    position: fixed;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,124,255,0.25), transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 0;
 }
 </style>
+</head>
+
+<body>
+
+<div id="progress-bar"></div>
+<div class="cursor-glow"></div>
+
+<nav>
+<div class="logo">DATA•SECURITY</div>
+<ul>
+<li><a href="#about">Тақырып</a></li>
+<li><a href="#risks">Қауіптер</a></li>
+<li><a href="#protection">Қорғау</a></li>
+</ul>
+</nav>
+
+<section class="hero">
+<div>
+<h1>Дербес деректерді <span>қорғау</span></h1>
+<p>
+Дербес деректер — адамның цифрлық әлемдегі жеке өмірі.
+Бұл сайтта деректердің түрлері, қауіптері, заңдық маңызы
+және оларды қорғаудың заманауи әдістері толық қарастырылады.
+</p>
+<button onclick="document.getElementById('about').scrollIntoView()">Бастау</button>
+</div>
+</section>
+
+<section id="about">
+<h2>Дербес деректер деген не?</h2>
+<p>
+Дербес деректер — белгілі бір адамды анықтауға мүмкіндік
+беретін кез келген ақпарат. Бұл деректерді қорғау Қазақстан
+Республикасының заңнамасында да қарастырылған.
+</p>
+
+<div class="cards">
+<div class="card reveal">
+<h3>Жеке деректер</h3>
+<p>Аты-жөні, туған күні, ЖСН, мекенжай.</p>
+</div>
+<div class="card reveal">
+<h3>Цифрлық деректер</h3>
+<p>IP-мекенжай, аккаунттар, cookies.</p>
+</div>
+<div class="card reveal">
+<h3>Қаржылық деректер</h3>
+<p>Банк картасы, онлайн төлемдер.</p>
+</div>
+</div>
+</section>
+
+<section id="risks" class="dark-section">
+<div class="parallax"></div>
+<h2>Негізгі қауіптер</h2>
+<p>
+Интернеттегі алаяқтық әдістер күн сайын дамуда.
+Пайдаланушы сақ болмаса, дербес деректер оңай қолды болуы мүмкін.
+</p>
+
+<div class="risk-list">
+<div class="risk-item reveal">
+<h3>Фишинг</h3>
+<p>Жалған сайттар мен хаттар арқылы дерек ұрлау.</p>
+</div>
+<div class="risk-item reveal">
+<h3>Хакерлік шабуыл</h3>
+<p>Жүйелерге заңсыз кіру.</p>
+</div>
+<div class="risk-item reveal">
+<h3>Әлеуметтік инженерия</h3>
+<p>Сенімге кіру арқылы ақпарат алу.</p>
+</div>
+</div>
+</section>
+
+<section id="protection">
+<h2>Қорғау әдістері</h2>
+<p>
+Қарапайым қауіпсіздік ережелерін сақтау —
+дербес деректерді қорғаудың ең тиімді жолы.
+</p>
+
+<div class="protection-grid">
+<div class="protect-card reveal" onclick="this.classList.toggle('active')">
+<h3>Күшті пароль</h3>
+<p>Ұзын және бірегей парольдер қолдану.</p>
+</div>
+<div class="protect-card reveal" onclick="this.classList.toggle('active')">
+<h3>2FA</h3>
+<p>Қос факторлы қорғау.</p>
+</div>
+<div class="protect-card reveal" onclick="this.classList.toggle('active')">
+<h3>VPN</h3>
+<p>Интернет трафигін шифрлау.</p>
+</div>
+</div>
+</section>
+
+<footer>
+<p>© 2026 | Дербес деректерді қорғау</p>
+<span>Ақпараттық қауіпсіздік бойынша оқу жобасы</span>
+</footer>
+
+<script>
+/* REVEAL */
+const reveals = document.querySelectorAll('.reveal');
+window.addEventListener('scroll', () => {
+reveals.forEach(el => {
+if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+el.style.opacity = 1;
+el.style.transform = "translateY(0)";
+el.style.transition = "1s";
+}
+});
+});
+
+/* PROGRESS */
+window.addEventListener("scroll", () => {
+const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+document.getElementById("progress-bar").style.width =
+(document.documentElement.scrollTop / h) * 100 + "%";
+});
+
+/* CURSOR GLOW */
+const glow = document.querySelector(".cursor-glow");
+document.addEventListener("mousemove", e => {
+glow.style.left = e.clientX + "px";
+glow.style.top = e.clientY + "px";
+});
+
+/* MAGNETIC */
+document.querySelectorAll('.card,.risk-item,.protect-card').forEach(card => {
+card.addEventListener('mousemove', e => {
+const r = card.getBoundingClientRect();
+const x = e.clientX - r.left - r.width / 2;
+const y = e.clientY - r.top - r.height / 2;
+card.style.transform = `translate(${x*0.08}px,${y*0.08}px)`;
+});
+card.addEventListener('mouseleave', () => {
+card.style.transform = 'translate(0,0)';
+});
+});
+</script>
+
+</body>
+</html>
