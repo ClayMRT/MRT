@@ -5,10 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Дербес деректерді қорғау</title>
 
-<!-- ================= GOOGLE FONT ================= -->
+<!-- =====================================================
+     GOOGLE FONT
+===================================================== -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- ================= ICONS ================= -->
+<!-- =====================================================
+     ICONS
+===================================================== -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
@@ -41,7 +45,7 @@ body{
     font-family:'Poppins',sans-serif;
     background:var(--bg);
     color:var(--text);
-    line-height:1.75;
+    line-height:1.8;
     overflow-x:hidden;
 }
 
@@ -71,7 +75,7 @@ nav{
     justify-content:space-between;
     align-items:center;
     backdrop-filter:blur(16px);
-    background:rgba(11,11,15,0.85);
+    background:rgba(11,11,15,0.9);
     border-bottom:1px solid var(--border);
     z-index:1000;
 }
@@ -85,7 +89,7 @@ nav .logo{
 nav ul{
     list-style:none;
     display:flex;
-    gap:24px;
+    gap:22px;
 }
 
 nav ul li a{
@@ -111,7 +115,6 @@ nav ul li a:hover{
 ===================================================== */
 section{
     padding:120px 6%;
-    position:relative;
 }
 
 /* =====================================================
@@ -121,13 +124,12 @@ section{
     min-height:100vh;
     display:grid;
     grid-template-columns:1.2fr 1fr;
-    align-items:center;
     gap:60px;
+    align-items:center;
 }
 
 .hero h1{
     font-size:56px;
-    line-height:1.2;
     margin-bottom:20px;
 }
 
@@ -137,30 +139,24 @@ section{
 
 .hero p{
     font-size:18px;
-    opacity:0.9;
     margin-bottom:35px;
+    opacity:0.9;
 }
 
 .hero button{
-    padding:15px 40px;
+    padding:16px 42px;
     border:none;
     border-radius:50px;
     background:var(--accent);
     color:#fff;
     font-weight:600;
     cursor:pointer;
-    transition:0.4s;
-}
-
-.hero button:hover{
-    transform:translateY(-4px);
-    box-shadow:0 20px 60px var(--accent-soft);
 }
 
 .hero img{
     width:100%;
     border-radius:30px;
-    box-shadow:0 40px 120px rgba(0,0,0,0.7);
+    box-shadow:0 40px 120px rgba(0,0,0,0.8);
 }
 
 /* =====================================================
@@ -200,8 +196,8 @@ h2 i{
     background:var(--card);
     border:1px solid var(--border);
     border-radius:26px;
-    padding:28px;
-    transition:0.5s;
+    padding:26px;
+    transition:0.4s;
 }
 
 .card:hover{
@@ -224,7 +220,7 @@ h2 i{
 }
 
 /* =====================================================
-   LAW SECTION STYLE
+   LAW
 ===================================================== */
 .law{
     background:radial-gradient(circle at top,rgba(124,124,255,0.2),transparent 60%);
@@ -234,7 +230,7 @@ h2 i{
    FEEDBACK
 ===================================================== */
 .feedback{
-    max-width:800px;
+    max-width:820px;
     margin-top:60px;
     background:rgba(255,255,255,0.05);
     border:1px solid var(--border);
@@ -256,7 +252,6 @@ h2 i{
     color:#fff;
     font-size:16px;
     padding:10px 0;
-    outline:none;
 }
 
 .field label{
@@ -277,13 +272,12 @@ h2 i{
 }
 
 .feedback button{
-    padding:15px 45px;
+    padding:15px 44px;
     border:none;
     border-radius:50px;
     background:var(--accent);
     color:#fff;
     font-weight:600;
-    cursor:pointer;
 }
 
 /* =====================================================
@@ -296,28 +290,12 @@ footer{
     opacity:0.8;
 }
 
-/* =====================================================
-   CURSOR GLOW
-===================================================== */
-.cursor{
-    position:fixed;
-    width:160px;
-    height:160px;
-    border-radius:50%;
-    background:radial-gradient(circle,rgba(124,124,255,0.25),transparent 70%);
-    pointer-events:none;
-    transform:translate(-50%,-50%);
-    z-index:0;
-}
-
 </style>
 </head>
 <body>
 
 <div id="progress"></div>
-<div class="cursor"></div>
 
-<!-- ================= NAV ================= -->
 <nav>
 <div class="logo"><i class="fas fa-shield-halved"></i> DATA SECURITY</div>
 <ul>
@@ -325,105 +303,155 @@ footer{
 <li><a href="#risks"><i class="fas fa-bug"></i> Қауіптер</a></li>
 <li><a href="#law"><i class="fas fa-gavel"></i> Заң</a></li>
 <li><a href="#protect"><i class="fas fa-lock"></i> Қорғау</a></li>
-<li><a href="#tips"><i class="fas fa-lightbulb"></i> Кеңес</a></li>
 <li><a href="#contact"><i class="fas fa-envelope"></i> Байланыс</a></li>
 </ul>
 </nav>
 
-<!-- ================= HERO ================= -->
+<!-- =====================================================
+     HERO (ИИ-КАРТИНКА)
+===================================================== -->
 <section class="hero">
 <div>
 <h1>Дербес деректерді <span>қорғау</span></h1>
 <p>
-Цифрлық заманда жеке ақпарат — ең қымбат ресурс.
-Бұл сайт деректерді қорғау, қауіптер, заңдар және
-қауіпсіздік әдістері туралы толық ақпарат береді.
+Цифрлық дәуірде жеке ақпарат — ең құнды ресурс.
+Бұл сайт дербес деректерді қорғау тақырыбын
+терең және визуалды түрде түсіндіреді.
 </p>
-<button onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
-Бастау
-</button>
+<button>Бастау</button>
 </div>
-<img src="images/hero-security.png" alt="AI Data Security">
+
+<img src="https://image.pollinations.ai/prompt/futuristic%20data%20security%20ai%20shield%20dark%20cyberpunk%20style">
 </section>
 
-<!-- ================= ABOUT ================= -->
+<!-- =====================================================
+     ABOUT
+===================================================== -->
 <section id="about">
 <h2><i class="fas fa-id-card"></i> Дербес деректер</h2>
+
 <div class="grid-3">
 
 <div class="card">
-<img src="images/personal-data.png">
+<img src="https://image.pollinations.ai/prompt/personal%20data%20protection%20identity%20ai%20illustration%20dark">
 <h3><i class="fas fa-user"></i> Жеке деректер</h3>
-<p>Аты-жөні, ЖСН, мекенжай, телефон.</p>
+<p>Аты-жөні, ЖСН, туған күні, мекенжай.</p>
 </div>
 
 <div class="card">
-<img src="images/digital-data.png">
+<img src="https://image.pollinations.ai/prompt/digital%20identity%20cyber%20data%20ai%20illustration">
 <h3><i class="fas fa-laptop-code"></i> Цифрлық деректер</h3>
-<p>IP, cookies, аккаунттар.</p>
+<p>IP, cookies, аккаунттар, логиндер.</p>
 </div>
 
 <div class="card">
-<img src="images/financial-data.png">
+<img src="https://image.pollinations.ai/prompt/financial%20data%20cyber%20security%20ai%20dark">
 <h3><i class="fas fa-credit-card"></i> Қаржылық деректер</h3>
-<p>Банк карталары мен төлемдер.</p>
+<p>Банк картасы, төлем тарихы.</p>
 </div>
 
 </div>
 </section>
 
-<!-- ================= RISKS ================= -->
+<!-- =====================================================
+     RISKS
+===================================================== -->
 <section id="risks">
 <h2><i class="fas fa-bug"></i> Қауіптер</h2>
+
 <div class="grid-4">
 
-<div class="card"><img src="images/phishing.png"><h3><i class="fas fa-fish"></i> Фишинг</h3><p>Жалған сайттар.</p></div>
-<div class="card"><img src="images/hacker.png"><h3><i class="fas fa-user-secret"></i> Хакер</h3><p>Аккаунт бұзу.</p></div>
-<div class="card"><img src="images/malware.png"><h3><i class="fas fa-skull"></i> Malware</h3><p>Зиянды код.</p></div>
-<div class="card"><img src="images/wifi.png"><h3><i class="fas fa-wifi"></i> Ашық Wi-Fi</h3><p>Қауіпсіз емес желі.</p></div>
+<div class="card">
+<img src="https://image.pollinations.ai/prompt/phishing%20attack%20cybercrime%20ai%20illustration">
+<h3><i class="fas fa-fish"></i> Фишинг</h3>
+<p>Жалған сайттар арқылы дерек ұрлау.</p>
+</div>
+
+<div class="card">
+<img src="https://image.pollinations.ai/prompt/hacker%20cyber%20attack%20dark%20ai%20art">
+<h3><i class="fas fa-user-secret"></i> Хакерлер</h3>
+<p>Аккаунт бұзу, дерек сату.</p>
+</div>
+
+<div class="card">
+<img src="https://image.pollinations.ai/prompt/malware%20virus%20computer%20ai%20illustration">
+<h3><i class="fas fa-skull"></i> Malware</h3>
+<p>Зиянды бағдарламалар.</p>
+</div>
+
+<div class="card">
+<img src="https://image.pollinations.ai/prompt/public%20wifi%20cyber%20security%20ai">
+<h3><i class="fas fa-wifi"></i> Ашық Wi-Fi</h3>
+<p>Қорғалмаған желілер.</p>
+</div>
 
 </div>
 </section>
 
-<!-- ================= LAW ================= -->
+<!-- =====================================================
+     LAW
+===================================================== -->
 <section id="law" class="law">
-<h2><i class="fas fa-gavel"></i> Заң және жауапкершілік</h2>
+<h2><i class="fas fa-gavel"></i> Заңдар</h2>
+
 <div class="grid-3">
 
-<div class="card"><img src="images/law.png"><h3>ҚР Заңы</h3><p>Дербес деректер туралы заң.</p></div>
-<div class="card"><img src="images/judge.png"><h3>Жауапкершілік</h3><p>Айыппұл және жаза.</p></div>
-<div class="card"><img src="images/rights.png"><h3>Азамат құқығы</h3><p>Өз дерегін қорғау.</p></div>
+<div class="card">
+<img src="https://image.pollinations.ai/prompt/law%20data%20protection%20government%20ai">
+<h3>ҚР Заңы</h3>
+<p>«Дербес деректер және оларды қорғау туралы» заң.</p>
+</div>
+
+<div class="card">
+<img src="https://image.pollinations.ai/prompt/court%20justice%20cyber%20crime%20ai">
+<h3>Жауапкершілік</h3>
+<p>Айыппұл және қылмыстық жаза.</p>
+</div>
+
+<div class="card">
+<img src="https://image.pollinations.ai/prompt/human%20rights%20data%20privacy%20ai">
+<h3>Азамат құқығы</h3>
+<p>Жеке деректерді қорғау құқығы.</p>
+</div>
 
 </div>
 </section>
 
-<!-- ================= PROTECT ================= -->
+<!-- =====================================================
+     PROTECT
+===================================================== -->
 <section id="protect">
 <h2><i class="fas fa-shield"></i> Қорғау әдістері</h2>
+
 <div class="grid-3">
 
-<div class="card"><img src="images/password.png"><h3>Күшті пароль</h3></div>
-<div class="card"><img src="images/storage.png"><h3>Қауіпсіз сақтау</h3></div>
-<div class="card"><img src="images/update.png"><h3>Жүйені жаңарту</h3></div>
+<div class="card">
+<img src="https://image.pollinations.ai/prompt/strong%20password%20cyber%20security%20ai">
+<h3>Күшті пароль</h3>
+<p>Күрделі және бірегей парольдер.</p>
+</div>
+
+<div class="card">
+<img src="https://image.pollinations.ai/prompt/data%20encryption%20security%20ai">
+<h3>Шифрлау</h3>
+<p>Деректерді қорғау технологиясы.</p>
+</div>
+
+<div class="card">
+<img src="https://image.pollinations.ai/prompt/system%20update%20cyber%20security%20ai">
+<h3>Жаңарту</h3>
+<p>Жүйені үнемі жаңарту.</p>
+</div>
 
 </div>
 </section>
 
-<!-- ================= TIPS ================= -->
-<section id="tips">
-<h2><i class="fas fa-lightbulb"></i> Кеңестер</h2>
-<div class="grid-3">
-
-<div class="card"><img src="images/personal-data.png"><h3>Ақпаратты аз бөліс</h3></div>
-<div class="card"><img src="images/wifi.png"><h3>VPN қолдан</h3></div>
-<div class="card"><img src="images/update.png"><h3>Жаңартуларды орнат</h3></div>
-
-</div>
-</section>
-
-<!-- ================= CONTACT ================= -->
+<!-- =====================================================
+     CONTACT
+===================================================== -->
 <section id="contact">
 <h2><i class="fas fa-envelope"></i> Кері байланыс</h2>
+
 <div class="feedback">
 
 <div class="field">
@@ -451,17 +479,9 @@ footer{
 </footer>
 
 <script>
-/* PROGRESS BAR */
 window.addEventListener("scroll",()=>{
 const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
 document.getElementById("progress").style.width=(scrollY/h)*100+"%";
-});
-
-/* CURSOR */
-const cursor=document.querySelector(".cursor");
-document.addEventListener("mousemove",e=>{
-cursor.style.left=e.clientX+"px";
-cursor.style.top=e.clientY+"px";
 });
 </script>
 
