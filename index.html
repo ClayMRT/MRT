@@ -5,221 +5,507 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Дербес деректерді қорғау</title>
 
-<!-- Poppins font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- ===================== FONTS ===================== -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- Font Awesome -->
+<!-- ===================== ICONS ===================== -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-/* ====== GLOBAL ====== */
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Poppins',sans-serif;background:#0e0e11;color:#eaeaf0;line-height:1.7;overflow-x:hidden}
+
+/* ==================================================
+   GLOBAL RESET
+================================================== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* ==================================================
+   ROOT VARIABLES
+================================================== */
 :root{
---accent:#7c7cff;
---accent-soft:rgba(124,124,255,.15);
---card-bg:rgba(255,255,255,.04);
---border-soft:rgba(255,255,255,.08)
+    --bg:#0e0e11;
+    --card:rgba(255,255,255,0.05);
+    --border:rgba(255,255,255,0.08);
+    --accent:#7c7cff;
+    --accent-soft:rgba(124,124,255,0.25);
+    --text:#eaeaf0;
 }
-section{padding:100px 6%}
-h1,h2,h3{font-weight:700;letter-spacing:-.5px}
-p{opacity:.85;margin-top:15px;line-height:1.7}
 
-/* ====== NAV ====== */
-nav{position:fixed;top:0;width:100%;padding:18px 6%;display:flex;justify-content:space-between;backdrop-filter:blur(12px);background:rgba(14,14,17,.7);border-bottom:1px solid var(--border-soft);z-index:1000}
-nav .logo{font-weight:700;color:var(--accent)}
-nav ul{display:flex;gap:25px;list-style:none}
-nav ul a{color:#fff;text-decoration:none;opacity:.8;font-weight:500}
-nav ul a:hover{opacity:1;color:var(--accent)}
-
-/* ====== HERO ====== */
-.hero{min-height:90vh;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
-.hero h1{font-size:54px;margin-bottom:20px;line-height:1.2}
-.hero h1 span{color:var(--accent)}
-.hero p{font-size:18px;max-width:700px;margin-bottom:30px}
-.hero button{padding:14px 34px;border-radius:40px;border:none;background:var(--accent);color:#fff;font-weight:600;cursor:pointer;transition:.4s}
-.hero button:hover{transform:translateY(-4px);box-shadow:0 20px 40px var(--accent-soft)}
-
-/* ====== CARDS ====== */
-.cards,.risk-list,.protection-grid,.law-cards,.tips-cards{
-display:grid;gap:25px;margin-top:50px
+/* ==================================================
+   BODY
+================================================== */
+body{
+    font-family:'Poppins',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.7;
+    overflow-x:hidden;
 }
-.cards{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-.risk-list{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.protection-grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.law-cards{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-.tips-cards{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.card,.risk-item,.protect-card,.law-card,.tip-card{
-background:var(--card-bg);
-border:1px solid var(--border-soft);
-border-radius:20px;
-padding:30px;
-opacity:0;transform:translateY(40px);
-transition:.6s
+
+/* ==================================================
+   PROGRESS BAR
+================================================== */
+#progress{
+    position:fixed;
+    top:0;
+    left:0;
+    height:4px;
+    width:0%;
+    background:linear-gradient(90deg,#7c7cff,#b6b6ff);
+    z-index:9999;
 }
-.card h3,.risk-item h3,.protect-card h3,.law-card h3,.tip-card h3{color:var(--accent);display:flex;align-items:center;gap:10px}
-.protect-card{cursor:pointer}
-.protect-card.active{transform:scale(1.05);box-shadow:0 40px 80px rgba(0,0,0,.5)}
-.card img,.risk-item img,.protect-card img,.law-card img,.tip-card img{margin-top:15px;width:100%;border-radius:15px}
 
-/* ====== DARK SECTION ====== */
-.dark-section{position:relative;overflow:hidden}
-.parallax{position:absolute;inset:0;background:radial-gradient(circle at top,rgba(124,124,255,.25),transparent 60%)}
+/* ==================================================
+   NAVBAR
+================================================== */
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    padding:18px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    backdrop-filter:blur(14px);
+    background:rgba(14,14,17,0.8);
+    border-bottom:1px solid var(--border);
+    z-index:1000;
+}
 
-/* ====== FEEDBACK FORM ====== */
-.feedback{max-width:700px;margin-top:60px;background:rgba(255,255,255,.05);border:1px solid var(--border-soft);border-radius:30px;padding:50px;backdrop-filter:blur(12px)}
-.feedback .field{position:relative;margin-bottom:25px}
-.feedback input,.feedback textarea{width:100%;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.3);padding:10px 0;color:#fff;font-size:16px;outline:none}
-.feedback label{position:absolute;left:0;top:10px;opacity:.6;transition:.3s;pointer-events:none}
-.feedback input:focus+label,
-.feedback input:valid+label,
-.feedback textarea:focus+label,
-.feedback textarea:valid+label{top:-14px;font-size:12px;color:var(--accent)}
-.feedback button{margin-top:20px;padding:14px 32px;border-radius:40px;border:none;background:var(--accent);color:#fff;cursor:pointer;font-weight:600}
-.success{display:none;margin-top:20px;color:#7cff9d}
+nav .logo{
+    font-size:22px;
+    font-weight:800;
+    color:var(--accent);
+}
 
-/* ====== FOOTER ====== */
-footer{padding:60px 6%;border-top:1px solid var(--border-soft);text-align:center;opacity:.7}
+nav ul{
+    list-style:none;
+    display:flex;
+    gap:26px;
+}
 
-/* ====== PROGRESS ====== */
-#progress-bar{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,#7c7cff,#b6b6ff);z-index:2000}
+nav ul li a{
+    text-decoration:none;
+    color:#fff;
+    font-weight:500;
+    opacity:0.85;
+    transition:0.3s;
+}
 
-/* ====== CURSOR ====== */
-.cursor-glow{position:fixed;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(124,124,255,.25),transparent 70%);pointer-events:none;transform:translate(-50%,-50%);z-index:0}
+nav ul li a i{
+    margin-right:6px;
+    color:var(--accent);
+}
+
+nav ul li a:hover{
+    opacity:1;
+    color:var(--accent);
+}
+
+/* ==================================================
+   SECTIONS
+================================================== */
+section{
+    padding:120px 6%;
+    position:relative;
+}
+
+/* ==================================================
+   HERO
+================================================== */
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+}
+
+.hero-content{
+    max-width:720px;
+    z-index:2;
+}
+
+.hero h1{
+    font-size:56px;
+    line-height:1.2;
+    margin-bottom:20px;
+}
+
+.hero h1 span{
+    color:var(--accent);
+}
+
+.hero p{
+    font-size:18px;
+    opacity:0.9;
+    margin-bottom:35px;
+}
+
+.hero button{
+    padding:15px 38px;
+    border:none;
+    border-radius:50px;
+    background:var(--accent);
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.4s;
+}
+
+.hero button:hover{
+    transform:translateY(-4px);
+    box-shadow:0 20px 50px var(--accent-soft);
+}
+
+/* HERO IMAGES */
+.hero img{
+    position:absolute;
+    width:260px;
+    opacity:0.35;
+    animation:float 7s ease-in-out infinite;
+}
+
+.hero .img1{ top:18%; right:6%; }
+.hero .img2{ bottom:15%; left:8%; animation-delay:2s; }
+
+@keyframes float{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(-25px); }
+}
+
+/* ==================================================
+   TITLES
+================================================== */
+h2{
+    font-size:38px;
+    margin-bottom:18px;
+}
+
+h2 i{
+    color:var(--accent);
+    margin-right:10px;
+}
+
+/* ==================================================
+   GRID SYSTEM
+================================================== */
+.grid-3{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+    margin-top:50px;
+}
+
+.grid-4{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:26px;
+    margin-top:50px;
+}
+
+/* ==================================================
+   CARD
+================================================== */
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:30px;
+    transition:0.5s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 30px 80px rgba(0,0,0,0.6);
+}
+
+.card h3{
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.card img{
+    width:100%;
+    border-radius:16px;
+    margin:18px 0;
+}
+
+/* ==================================================
+   LAW SECTION
+================================================== */
+.law{
+    background:radial-gradient(circle at top,rgba(124,124,255,0.18),transparent 60%);
+}
+
+/* ==================================================
+   FEEDBACK
+================================================== */
+.feedback-box{
+    max-width:720px;
+    margin-top:60px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid var(--border);
+    border-radius:30px;
+    padding:50px;
+}
+
+.field{
+    position:relative;
+    margin-bottom:30px;
+}
+
+.field input,
+.field textarea{
+    width:100%;
+    background:none;
+    border:none;
+    border-bottom:1px solid rgba(255,255,255,0.3);
+    color:#fff;
+    font-size:16px;
+    padding:10px 0;
+    outline:none;
+}
+
+.field label{
+    position:absolute;
+    left:0;
+    top:10px;
+    opacity:0.6;
+    transition:0.3s;
+}
+
+.field input:focus + label,
+.field input:valid + label,
+.field textarea:focus + label,
+.field textarea:valid + label{
+    top:-14px;
+    font-size:12px;
+    color:var(--accent);
+}
+
+.feedback-box button{
+    padding:15px 40px;
+    border:none;
+    border-radius:50px;
+    background:var(--accent);
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+}
+
+/* ==================================================
+   FOOTER
+================================================== */
+footer{
+    padding:70px 6%;
+    text-align:center;
+    border-top:1px solid var(--border);
+    opacity:0.8;
+}
+
+/* ==================================================
+   CURSOR GLOW
+================================================== */
+.cursor{
+    position:fixed;
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(124,124,255,0.25),transparent 70%);
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+    z-index:0;
+}
+
 </style>
 </head>
-
 <body>
 
-<div id="progress-bar"></div>
-<div class="cursor-glow"></div>
+<div id="progress"></div>
+<div class="cursor"></div>
 
+<!-- ===================== NAV ===================== -->
 <nav>
-<div class="logo"><i class="fas fa-shield-alt"></i> DATA•SECURITY</div>
+<div class="logo"><i class="fas fa-shield-halved"></i> DATA SECURITY</div>
 <ul>
-<li><a href="#about"><i class="fas fa-user-shield"></i> Тақырып</a></li>
-<li><a href="#risks"><i class="fas fa-exclamation-triangle"></i> Қауіптер</a></li>
+<li><a href="#about"><i class="fas fa-user-shield"></i> Деректер</a></li>
+<li><a href="#risks"><i class="fas fa-triangle-exclamation"></i> Қауіптер</a></li>
 <li><a href="#law"><i class="fas fa-gavel"></i> Заң</a></li>
-<li><a href="#protection"><i class="fas fa-lock"></i> Қорғау</a></li>
+<li><a href="#protect"><i class="fas fa-lock"></i> Қорғау</a></li>
 <li><a href="#tips"><i class="fas fa-lightbulb"></i> Кеңестер</a></li>
-<li><a href="#feedback"><i class="fas fa-envelope"></i> Кері байланыс</a></li>
+<li><a href="#contact"><i class="fas fa-envelope"></i> Байланыс</a></li>
 </ul>
 </nav>
 
+<!-- ===================== HERO ===================== -->
 <section class="hero">
-<div>
+<div class="hero-content">
 <h1>Дербес деректерді <span>қорғау</span></h1>
-<p>Бұл сайтта сіз дербес деректердің қауіптерін, заңдарын, қорғау әдістерін және практикалық кеңестерді табасыз. 
-Барлық ақпарат визуалды, интерактивті және оқуға ыңғайлы.</p>
-<button onclick="about.scrollIntoView()">Бастау</button>
+<p>
+Жеке ақпаратты қорғау — қазіргі цифрлық әлемдегі ең маңызды міндеттердің бірі.
+Бұл сайтта сен дербес деректер, қауіптер, заңдар және қорғау әдістері туралы
+толық әрі визуалды ақпарат аласың.
+</p>
+<button onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+Бастау
+</button>
 </div>
+
+<img class="img1" src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=400&q=80">
+<img class="img2" src="https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&w=400&q=80">
 </section>
 
+<!-- ===================== ABOUT ===================== -->
 <section id="about">
-<h2><i class="fas fa-user"></i> Дербес деректер деген не?</h2>
-<p>Дербес деректер – адамды тікелей немесе жанама түрде анықтай алатын ақпарат. 
-Бұл аты-жөні, ЖСН, туған күні, мекенжай, әлеуметтік желі профильдері және қаржылық ақпарат. 
-Дербес деректерді қорғау әр азаматтың құқығы мен қауіпсіздігіне жауапкершілік береді.</p>
+<h2><i class="fas fa-id-card"></i> Дербес деректер деген не?</h2>
+<p>
+Дербес деректер — адамды тікелей немесе жанама түрде анықтауға болатын кез келген ақпарат.
+Бұл ақпараттың таралуы үлкен қауіпке әкелуі мүмкін.
+</p>
 
-<div class="cards">
-<div class="card reveal"><h3><i class="fas fa-id-card"></i> Жеке деректер</h3><img src="https://images.unsplash.com/photo-1612831817667-cd9e7bb14f4?crop=entropy&cs=tinysrgb&fit=max&h=200&w=300"><p>Аты-жөні, туған күні, ЖСН, мекенжай.</p></div>
-<div class="card reveal"><h3><i class="fas fa-laptop-code"></i> Цифрлық деректер</h3><img src="https://images.unsplash.com/photo-1591696205602-7b6f1dbb3cde?crop=entropy&cs=tinysrgb&fit=max&h=200&w=300"><p>IP, аккаунттар, cookies, әлеуметтік желі профайлы.</p></div>
-<div class="card reveal"><h3><i class="fas fa-credit-card"></i> Қаржылық деректер</h3><img src="https://images.unsplash.com/photo-1581091870622-d78e8f4b6e34?crop=entropy&cs=tinysrgb&fit=max&h=200&w=300"><p>Банк картасы, онлайн төлемдер, транзакциялар.</p></div>
+<div class="grid-3">
+<div class="card">
+<h3><i class="fas fa-user"></i> Жеке деректер</h3>
+<img src="https://images.unsplash.com/photo-1612831817667-cd9e7bb14f4c?auto=format&fit=crop&w=600&q=80">
+<p>Аты-жөні, туған күні, ЖСН, мекенжай, телефон нөмірі.</p>
+</div>
+
+<div class="card">
+<h3><i class="fas fa-laptop-code"></i> Цифрлық деректер</h3>
+<img src="https://images.unsplash.com/photo-1591696205602-7b6f1dbb3cde?auto=format&fit=crop&w=600&q=80">
+<p>IP-адрес, cookies, аккаунттар, әлеуметтік желідегі деректер.</p>
+</div>
+
+<div class="card">
+<h3><i class="fas fa-credit-card"></i> Қаржылық деректер</h3>
+<img src="https://images.unsplash.com/photo-1581091870622-d78e8f4b6e34?auto=format&fit=crop&w=600&q=80">
+<p>Банк карталары, төлем тарихы, онлайн-банкинг.</p>
+</div>
 </div>
 </section>
 
-<section id="risks" class="dark-section">
-<div class="parallax"></div>
-<h2><i class="fas fa-exclamation-circle"></i> Қауіптер</h2>
-<p>Интернеттегі алаяқтық және хакерлік шабуылдар жыл сайын күрделене түседі. 
-Қолданушы сақ болмаса, дербес деректері оңай қолды болуы мүмкін.</p>
+<!-- ===================== RISKS ===================== -->
+<section id="risks">
+<h2><i class="fas fa-bug"></i> Қауіптер</h2>
 
-<div class="risk-list">
-<div class="risk-item reveal"><h3><i class="fas fa-fish"></i> Фишинг</h3><img src="https://images.unsplash.com/photo-1581092335626-8a3e6e6db5c7?crop=entropy&cs=tinysrgb&fit=max&h=200&w=300"><p>Жалған сайттар мен хаттар арқылы жеке деректерді ұрлау.</p></div>
-<div class="risk-item reveal"><h3><i class="fas fa-hacker"></i> Хакерлік шабуыл</h3><img src="https://images.unsplash.com/photo-1554160742-9602b8d0c0f4?crop=entropy&cs=tinysrgb&fit=max&h=200&w=300"><p>Жүйелерге заңсыз кіру, деректерді бұзу.</p></div>
-<div class="risk-item reveal"><h3><i class="fas fa-user-secret"></i> Әлеуметтік инженерия</h3><img src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?crop=entropy&cs=tinysrgb&fit=max&h=200&w=300"><p>Сенімге кіріп ақпарат алу әдістері.</p></div>
+<div class="grid-4">
+<div class="card">
+<h3><i class="fas fa-fish"></i> Фишинг</h3>
+<img src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=600&q=80">
+<p>Жалған сайттар мен хабарламалар арқылы ақпарат ұрлау.</p>
+</div>
+
+<div class="card">
+<h3><i class="fas fa-user-secret"></i> Хакерлік шабуыл</h3>
+<img src="https://images.unsplash.com/photo-1554160742-9602b8d0c0f4?auto=format&fit=crop&w=600&q=80">
+<p>Жүйелерге заңсыз кіру және деректерді жою.</p>
+</div>
+
+<div class="card">
+<h3><i class="fas fa-skull"></i> Malware</h3>
+<img src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?auto=format&fit=crop&w=600&q=80">
+<p>Зиянды бағдарламалар арқылы бақылау.</p>
+</div>
+
+<div class="card">
+<h3><i class="fas fa-wifi"></i> Ашық Wi-Fi</h3>
+<img src="https://images.unsplash.com/photo-1526378722433-4bda4f3c8d48?auto=format&fit=crop&w=600&q=80">
+<p>Қауіпсіз емес желілерде деректердің ұрлануы.</p>
+</div>
 </div>
 </section>
 
-<section id="law">
-<h2><i class="fas fa-gavel"></i> Заң және жауапкершілік</h2>
-<p>Қазақстанда дербес деректерді қорғау «Дербес деректер және оларды қорғау туралы» заңымен реттеледі. 
-Заңсыз жинау немесе тарату – әкімшілік немесе қылмыстық жауапкершілікке әкеледі.</p>
+<!-- ===================== LAW ===================== -->
+<section id="law" class="law">
+<h2><i class="fas fa-scale-balanced"></i> Заң және жауапкершілік</h2>
 
-<div class="law-cards">
-<div class="law-card reveal"><h3><i class="fas fa-file-alt"></i> Мақала 137</h3><img src="https://images.unsplash.com/photo-1591696205602-7b6f1dbb3cde?crop=entropy&cs=tinysrgb&fit=max&h=200&w=300"><p>Дербес деректерді заңсыз жинау және өңдеуге тыйым.</p></div>
-<div class="law-card reveal"><h3><i class="fas fa-file-alt"></i> Мақала 138</h3><img src="https://images.unsplash.com/photo-1581092335036-7e1e6f02b53d?crop=entropy&cs=tinysrgb&fit=max&h=200&w=300"><p>Дербес деректерді жариялау немесе сату заңға қайшы.</p></div>
-<div class="law-card reveal"><h3><i class="fas fa-file-alt"></i> Мақала 139</h3><img src="https://images.unsplash.com/photo-1581092335373-f1fef9e16d4c?crop=entropy&cs=tinysrgb&fit=max&h=200&w=300"><p>Жеке деректерді бұзған жағдайда жауапкершілік көзделген.</p></div>
+<div class="grid-3">
+<div class="card">
+<h3><i class="fas fa-file-contract"></i> ҚР Заңы</h3>
+<img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80">
+<p>«Дербес деректер және оларды қорғау туралы» заң.</p>
+</div>
+
+<div class="card">
+<h3><i class="fas fa-gavel"></i> Жауапкершілік</h3>
+<img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=600&q=80">
+<p>Айыппұлдар, қылмыстық жауапкершілік.</p>
+</div>
+
+<div class="card">
+<h3><i class="fas fa-lock"></i> Азамат құқығы</h3>
+<img src="https://images.unsplash.com/photo-1565373677928-90e963765eac?auto=format&fit=crop&w=600&q=80">
+<p>Өз деректерін қорғауға толық құқық.</p>
+</div>
 </div>
 </section>
 
-<section id="protection">
-<h2><i class="fas fa-lock"></i> Қорғау әдістері</h2>
-<p>Қарапайым қауіпсіздік ережелерін сақтау – дербес деректерді қорғаудың ең тиімді жолы. 
-Төмендегі әдістерді күнделікті қолданған жөн.</p>
+<!-- ===================== PROTECT ===================== -->
+<section id="protect">
+<h2><i class="fas fa-shield"></i> Қорғау әдістері</h2>
 
-<div class="protection-grid">
-<div class="protect-card reveal" onclick="this.classList.toggle('active')"><h3><i class="fas fa-key"></i> Күшті пароль</h3><img src="https://images.unsplash.com/photo-1581092335036-7e1e6f02b53d?crop=entropy&cs=tinysrgb&fit=max&h=200&w=300"><p>Ұзын және бірегей парольдер қолдану.</p></div>
-<div class="protect-card reveal" onclick="this.classList.toggle('active')"><h3><i class="fas fa-shield-alt"></i> 2FA</h3><img src="https://images.unsplash.com/photo-1581092335373-f1fef9e16d4c?crop=entropy&cs=tinysrgb&fit=max&h=200&w=300"><p>Қос факторлы аутентификация енгізу.</p></div>
-<div class="protect-card reveal" onclick="this.classList.toggle('active')"><h3><i class="fas fa-vpn-key"></i> VPN</h3><img src="https://images.unsplash.com/photo-1581092335356-6a1f2eb3d3b6?crop=entropy&cs=tinysrgb&fit=max&h=200&w=300"><p>Интернет трафигін шифрлау.</p></div>
+<div class="grid-4">
+<div class="card"><h3><i class="fas fa-key"></i> Күшті пароль</h3><img src="https://images.unsplash.com/photo-1581092335036-7e1e6f02b53d?auto=format&fit=crop&w=600&q=80"><p>Ұзын және күрделі пароль.</p></div>
+<div class="card"><h3><i class="fas fa-fingerprint"></i> 2FA</h3><img src="https://images.unsplash.com/photo-1581092335373-f1fef9e16d4c?auto=format&fit=crop&w=600&q=80"><p>Қос факторлы қорғаныс.</p></div>
+<div class="card"><h3><i class="fas fa-vpn"></i> VPN</h3><img src="https://images.unsplash.com/photo-1581092335356-6a1f2eb3d3b6?auto=format&fit=crop&w=600&q=80"><p>Трафикті шифрлау.</p></div>
+<div class="card"><h3><i class="fas fa-shield-virus"></i> Антивирус</h3><img src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?auto=format&fit=crop&w=600&q=80"><p>Зиянды кодтан қорғау.</p></div>
 </div>
 </section>
 
+<!-- ===================== TIPS ===================== -->
 <section id="tips">
-<h2><i class="fas fa-lightbulb"></i> Кеңестер</h2>
-<p>Дербес деректерді қорғау бойынша практикалық кеңестер:</p>
-<div class="tips-cards">
-<div class="tip-card reveal"><h3><i class="fas fa-user-secret"></i> Жеке ақпаратты аз жариялаңыз</h3><img src="https://images.unsplash.com/photo-1591696205602-7b6f1dbb3cde?crop=entropy&cs=tinysrgb&fit=max&h=200&w=300"><p>Әлеуметтік желіде жеке мәліметтерді тек қажет болғанда бөлісу.</p></div>
-<div class="tip-card reveal"><h3><i class="fas fa-lock"></i> Құпиясөз менеджерін пайдаланыңыз</h3><img src="https://images.unsplash.com/photo-1581092335036-7e1e6f02b53d?crop=entropy&cs=tinysrgb&fit=max&h=200&w=300"><p>Барлық аккаунттарға қауіпсіз парольдер сақтау.</p></div>
+<h2><i class="fas fa-lightbulb"></i> Пайдалы кеңестер</h2>
+
+<div class="grid-3">
+<div class="card"><h3><i class="fas fa-eye-slash"></i> Ақпаратты жасыр</h3><img src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=600&q=80"><p>Әлеуметтік желіде артық дерек салма.</p></div>
+<div class="card"><h3><i class="fas fa-cloud-lock"></i> Қауіпсіз сақтау</h3><img src="https://images.unsplash.com/photo-1526378722433-4bda4f3c8d48?auto=format&fit=crop&w=600&q=80"><p>Сенімді сервистерді қолдан.</p></div>
+<div class="card"><h3><i class="fas fa-rotate"></i> Жаңарту</h3><img src="https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&w=600&q=80"><p>Жүйені үнемі жаңарт.</p></div>
 </div>
 </section>
 
-<section id="feedback">
+<!-- ===================== CONTACT ===================== -->
+<section id="contact">
 <h2><i class="fas fa-envelope"></i> Кері байланыс</h2>
-<p>Сұрақтарыңыз немесе пікірлеріңіз болса, төмендегі форманы толтырыңыз.</p>
-<div class="feedback">
-<div class="field"><input type="text" required><label>Аты-жөніңіз</label></div>
-<div class="field"><input type="email" required><label>Email</label></div>
-<div class="field"><textarea rows="4" required></textarea><label>Хабарлама</label></div>
-<button onclick="sendForm()">Жіберу</button>
-<div class="success">✔ Хабарлама сәтті жіберілді!</div>
+
+<div class="feedback-box">
+<div class="field">
+<input type="text" required>
+<label>Атың</label>
+</div>
+<div class="field">
+<input type="email" required>
+<label>Email</label>
+</div>
+<div class="field">
+<textarea rows="4" required></textarea>
+<label>Хабарлама</label>
+</div>
+<button>Жіберу</button>
 </div>
 </section>
 
 <footer>
-<p>© 2026 | Дербес деректерді қорғау</p>
-<span>Ақпараттық қауіпсіздік бойынша оқу жобасы</span>
+<p>© 2026 • Дербес деректерді қорғау • Оқу жобасы</p>
 </footer>
 
 <script>
-/* REVEAL */
-const reveals=document.querySelectorAll('.reveal');
-window.addEventListener('scroll',()=>{
-reveals.forEach(el=>{
-if(el.getBoundingClientRect().top<window.innerHeight-100){
-el.style.opacity=1;el.style.transform="translateY(0)";
-}
-});
-});
-
 /* PROGRESS */
-const progressBar=document.getElementById("progress-bar");
 window.addEventListener("scroll",()=>{
 const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
-progressBar.style.width=(document.documentElement.scrollTop/h)*100+"%";
+document.getElementById("progress").style.width=(scrollY/h)*100+"%";
 });
 
 /* CURSOR */
-const glow=document.querySelector(".cursor-glow");
+const cursor=document.querySelector(".cursor");
 document.addEventListener("mousemove",e=>{
-glow.style.left=e.clientX+"px";glow.style.top=e.clientY+"px";
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
 });
-
-/* FORM SUBMIT */
-function sendForm(){
-document.querySelector(".success").style.display="block";
-setTimeout(()=>{document.querySelector(".success").style.display="none"},3000);
-}
 </script>
 
 </body>
