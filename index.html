@@ -3,306 +3,712 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Дербес деректерді қорғау</title>
+<title>CyberGuard | Дербес деректерді қорғау</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
-/* =========================
-   BASE
-   ========================= */
-* { box-sizing: border-box; }
+/* =========================================
+   1. RESET & VARIABLES
+   ========================================= */
+:root {
+    --primary: #00f260;
+    --secondary: #0575E6;
+    --dark: #05050b;
+    --glass: rgba(255, 255, 255, 0.05);
+    --border: rgba(255, 255, 255, 0.1);
+    --text-main: #ffffff;
+    --text-muted: #a0a0b0;
+    --glow: 0 0 20px rgba(0, 242, 96, 0.3);
+    --font: 'Outfit', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: #05050b;
-  color: #fff;
-  overflow-x: hidden;
-}
-h1 { font-size: 32px; margin-bottom: 30px; text-align: center; }
-h3 { margin: 15px 0 10px; font-size: 1.2rem; }
-p { color: #ccc; line-height: 1.5; }
-
-/* BACKGROUND */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(108,99,255,.18), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(0,255,200,.15), transparent 40%);
-  z-index: -1;
-  animation: bgMove 20s linear infinite;
-}
-@keyframes bgMove {
-  from { filter: hue-rotate(0deg); }
-  to { filter: hue-rotate(360deg); }
+    background: var(--dark);
+    font-family: var(--font);
+    color: var(--text-main);
+    overflow-x: hidden;
+    line-height: 1.6;
 }
 
-/* =========================
-   NAV
-   ========================= */
-.nav {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  padding: 20px;
-  position: sticky;
-  top: 0;
-  background: rgba(5,5,11,.8);
-  backdrop-filter: blur(14px);
-  z-index: 100;
-  flex-wrap: wrap; /* Мобильді құрылғыда сыймаса төмен түсу үшін */
+/* =========================================
+   2. ANIMATED BACKGROUND (CANVAS OVERLAY)
+   ========================================= */
+#canvas-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: radial-gradient(circle at 50% 50%, #0a0a1a, #000);
 }
-.nav button {
-  padding: 12px 20px;
-  border: none;
-  border-radius: 12px;
-  background: #6c63ff;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-.nav button:active { transform: scale(0.95); }
 
-/* =========================
-   PAGES
-   ========================= */
-.page {
-  display: none;
-  min-height: 100vh;
-  padding: 40px 5vw;
-  max-width: 1200px; /* Контент тым созылып кетпеу үшін */
-  margin: 0 auto;
+/* =========================================
+   3. HEADER & NAV
+   ========================================= */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(5, 5, 11, 0.8);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    transition: 0.3s;
 }
-.page.active { display: block; }
 
-/* =========================
-   GRIDS (СУРЕТТЕР МӘСЕЛЕСІ ШЕШІЛДІ)
-   ========================= */
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-main);
+    font-weight: 500;
+    font-size: 16px;
+    transition: 0.3s;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: 0.3s;
+}
+
+.nav-links a:hover::after { width: 100%; }
+.nav-links a:hover { color: var(--primary); }
+
+.menu-btn { display: none; color: #fff; font-size: 24px; cursor: pointer; }
+
+/* =========================================
+   4. HERO SECTION
+   ========================================= */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10%;
+    position: relative;
+}
+
+.hero-text {
+    max-width: 600px;
+    z-index: 2;
+}
+
+.badge {
+    display: inline-block;
+    padding: 8px 16px;
+    background: rgba(0, 242, 96, 0.1);
+    color: var(--primary);
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    border: 1px solid rgba(0, 242, 96, 0.2);
+}
+
+.hero h1 {
+    font-size: 60px;
+    line-height: 1.1;
+    margin-bottom: 25px;
+}
+
+.hero h1 span {
+    color: var(--secondary);
+}
+
+.hero p {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+}
+
+.cta-btn {
+    padding: 15px 40px;
+    background: linear-gradient(45deg, var(--secondary), var(--primary));
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(5, 117, 230, 0.4);
+    transition: 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.cta-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(5, 117, 230, 0.6);
+}
+
+/* Floating 3D Elements Placeholder */
+.hero-visual {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circle-glow {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(5,117,230,0.2), transparent 70%);
+    border-radius: 50%;
+    animation: pulse 4s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.lock-icon {
+    font-size: 150px;
+    color: rgba(255,255,255,0.9);
+    filter: drop-shadow(0 0 30px var(--secondary));
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* =========================================
+   5. SECTIONS GENERAL
+   ========================================= */
+section {
+    padding: 100px 10%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title h2 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.section-title p {
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* =========================================
+   6. CARDS GRID (GLASSMORPHISM)
+   ========================================= */
 .grid {
-  display: grid;
-  /* 320px тым үлкен, оны 260px-қа өзгерттім, енді олар қатар тұрады */
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 30px;
-}
-.card {
-  background: #121224;
-  border-radius: 20px;
-  padding: 20px;
-  transition: .35s;
-  display: flex;
-  flex-direction: column;
-}
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 60px rgba(108,99,255,.2);
-}
-.card img {
-  width: 100%;
-  height: 180px; /* Биіктігін сәл азайттым, ұқыпты көріну үшін */
-  object-fit: cover;
-  border-radius: 12px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
 }
 
-/* =========================
-   FLIP CARDS (АРТҚЫ ЖАҒЫ МӘСЕЛЕСІ ШЕШІЛДІ)
-   ========================= */
+.glass-card {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: 24px;
+    transition: 0.4s;
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-10px);
+    border-color: var(--primary);
+    box-shadow: var(--glow);
+}
+
+.icon-box {
+    width: 60px;
+    height: 60px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.glass-card h3 { margin-bottom: 15px; font-size: 22px; }
+.glass-card p { font-size: 15px; color: var(--text-muted); }
+
+/* =========================================
+   7. FLIP CARDS (REMASTERED)
+   ========================================= */
 .flip-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
-}
-.flip-card {
-  perspective: 1600px;
-  height: 320px; /* Биіктік бекітілген */
-}
-.flip-inner {
-  width: 100%;
-  height: 100%;
-  transition: .8s cubic-bezier(0.4, 0.2, 0.2, 1);
-  transform-style: preserve-3d;
-  position: relative;
-}
-.flip-card:hover .flip-inner {
-  transform: rotateY(180deg);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
 }
 
-/* Ортақ стильдер (алдыңғы және артқы) */
+.flip-card {
+    background: transparent;
+    height: 400px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.flip-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-inner {
+    transform: rotateY(180deg);
+}
+
 .flip-front, .flip-back {
-  position: absolute;
-  inset: 0; /* Толық ені мен биіктігін алады */
-  border-radius: 24px;
-  padding: 30px;
-  backface-visibility: hidden;
-  /* Мәтінді ортаға келтіру үшін Flex қолданамыз */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 24px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .flip-front {
-  background: linear-gradient(135deg, #6c63ff, #4b44b8);
-  font-size: 24px;
-  font-weight: 700;
-  border: 1px solid rgba(255,255,255,0.1);
+    background: linear-gradient(145deg, #121225, #0a0a15);
 }
+
+.flip-front i {
+    font-size: 60px;
+    margin-bottom: 20px;
+    background: -webkit-linear-gradient(var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.flip-front h3 { font-size: 24px; }
 
 .flip-back {
-  background: #1b1b38;
-  transform: rotateY(180deg);
-  line-height: 1.6;
-  font-size: 16px;
-  border: 1px solid #6c63ff;
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    color: #fff;
+    transform: rotateY(180deg);
 }
 
-/* =========================
-   TRANSITION
-   ========================= */
-#page-transition {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle, #6c63ff, #05050b);
-  transform: scaleY(0);
-  transform-origin: top;
-  z-index: 9999;
-  pointer-events: none;
+.flip-back h3 { 
+    margin-bottom: 15px; 
+    border-bottom: 2px solid rgba(255,255,255,0.3);
+    padding-bottom: 10px;
 }
-.enter { animation: enter .6s forwards; }
-.exit { animation: exit .6s forwards; }
-@keyframes enter { to { transform: scaleY(1); } }
-@keyframes exit { to { transform: scaleY(0); } }
+.flip-back p { font-size: 16px; line-height: 1.6; }
 
-/* =========================
-   REVEAL
-   ========================= */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: 0.8s ease-out;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: none;
+/* =========================================
+   8. STATS SECTION
+   ========================================= */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    background: rgba(255,255,255,0.02);
+    padding: 60px 10%;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
 }
 
-/* =========================
-   MOBILE
-   ========================= */
-@media(max-width: 600px) {
-  h1 { font-size: 24px; }
-  .grid, .flip-grid { grid-template-columns: 1fr; } /* 1 баған */
-  .flip-card { height: 280px; }
+.stat-item {
+    text-align: center;
+    margin: 20px;
+}
+
+.stat-number {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--primary);
+    display: block;
+}
+
+.stat-label {
+    color: var(--text-muted);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* =========================================
+   9. FOOTER
+   ========================================= */
+footer {
+    background: #020205;
+    padding: 80px 10% 20px;
+    border-top: 1px solid var(--border);
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.footer-col h4 {
+    font-size: 20px;
+    margin-bottom: 25px;
+    color: #fff;
+}
+
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 15px; }
+.footer-col ul li a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: 0.3s;
+}
+.footer-col ul li a:hover { color: var(--primary); padding-left: 5px; }
+
+.socials { display: flex; gap: 15px; }
+.socials a {
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.socials a:hover { background: var(--primary); transform: translateY(-3px); }
+
+.copyright {
+    text-align: center;
+    color: #555;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+/* =========================================
+   10. MEDIA QUERIES
+   ========================================= */
+@media (max-width: 992px) {
+    .hero { flex-direction: column; text-align: center; padding-top: 150px; }
+    .hero-text { margin-bottom: 50px; }
+    .hero h1 { font-size: 42px; }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: #05050b;
+        flex-direction: column;
+        padding: 30px;
+        border-bottom: 1px solid var(--border);
+    }
+    .nav-links.active { display: flex; }
+    .menu-btn { display: block; }
+    .hero-visual { width: 100%; height: auto; }
+    .lock-icon { font-size: 100px; }
+    .circle-glow { width: 280px; height: 280px; }
 }
 </style>
 </head>
-
 <body>
 
-<div id="page-transition"></div>
+<canvas id="canvas-bg"></canvas>
 
-<nav class="nav">
-  <button onclick="showPage(1)">Дербес деректер</button>
-  <button onclick="showPage(2)">Қауіптер мен заңдар</button>
-</nav>
+<header>
+    <div class="logo">CyberGuard.</div>
+    <nav class="nav-links">
+        <a href="#hero">Басты бет</a>
+        <a href="#data">Деректер</a>
+        <a href="#risks">Қауіптер</a>
+        <a href="#contact">Байланыс</a>
+    </nav>
+    <div class="menu-btn"><i class="fa-solid fa-bars"></i></div>
+</header>
 
-<section id="page1" class="page active">
-<h1><i class="fa-solid fa-id-card"></i> Дербес деректер туралы</h1>
-
-<div class="grid">
-  <div class="card reveal">
-    <img src="https://images.unsplash.com/photo-1556155092-8707de31f9c4" alt="Personal Data">
-    <h3>Жеке деректер</h3>
-    <p>Аты-жөні, ЖСН, телефон нөмірі, банк карталарының деректері, мекенжай.</p>
-  </div>
-
-  <div class="card reveal">
-    <img src="https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0" alt="Digital Footprint">
-    <h3>Цифрлық із</h3>
-    <p>IP мекенжай, cookies, іздеу тарихы, әлеуметтік желідегі белсенділік.</p>
-  </div>
-
-  <div class="card reveal">
-    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3" alt="Protection">
-    <h3>Қорғау жолдары</h3>
-    <p>Күрделі пароль, екі факторлы аутентификация (2FA), шифрлау, VPN қолдану.</p>
-  </div>
-</div>
+<section id="hero" class="hero">
+    <div class="hero-text">
+        <span class="badge">v2.0 Қауіпсіздік жүйесі</span>
+        <h1>Сіздің деректеріңіз <br><span>Біздің басты құндылығымыз</span></h1>
+        <p>Киберқауіпсіздік әлемінде өз орныңызды табыңыз. Жеке деректеріңізді қорғауды бүгіннен бастаңыз.</p>
+        <a href="#data" class="cta-btn">Толығырақ білу</a>
+    </div>
+    
+    <div class="hero-visual">
+        <div class="circle-glow"></div>
+        <i class="fa-solid fa-shield-cat lock-icon"></i>
+    </div>
 </section>
 
-<section id="page2" class="page">
-<h1><i class="fa-solid fa-shield-halved"></i> Қауіптер мен заңдар</h1>
-
-<div class="flip-grid">
-  <div class="flip-card reveal">
-    <div class="flip-inner">
-      <div class="flip-front">
-        <i class="fa-solid fa-fish" style="margin-bottom:10px; font-size:40px;"></i>
-        Фишинг
-      </div>
-      <div class="flip-back">
-        <h3>Фишинг деген не?</h3>
-        <p>Бұл – жалған сайттар немесе хаттар арқылы логин мен парольді ұрлау әдісі. Ол көбіне email немесе мессенджер сілтемелері арқылы таралады.</p>
-      </div>
+<div class="stats">
+    <div class="stat-item">
+        <span class="stat-number">98%</span>
+        <span class="stat-label">Қорғалу деңгейі</span>
     </div>
-  </div>
-
-  <div class="flip-card reveal">
-    <div class="flip-inner">
-      <div class="flip-front">
-        <i class="fa-solid fa-user-secret" style="margin-bottom:10px; font-size:40px;"></i>
-        Хакерлер
-      </div>
-      <div class="flip-back">
-        <h3>Хакерлік шабуыл</h3>
-        <p>Зиянкестер арнайы бағдарламалар арқылы дерекқорды бұзып, жеке ақпаратты ұрлайды, сатады немесе бопсалайды.</p>
-      </div>
+    <div class="stat-item">
+        <span class="stat-number">24/7</span>
+        <span class="stat-label">Мониторинг</span>
     </div>
-  </div>
-
-  <div class="flip-card reveal">
-    <div class="flip-inner">
-      <div class="flip-front">
-        <i class="fa-solid fa-scale-balanced" style="margin-bottom:10px; font-size:40px;"></i>
-        ҚР Заңы
-      </div>
-      <div class="flip-back">
-        <h3>Заңмен қорғау</h3>
-        <p>«Дербес деректер және оларды қорғау туралы» ҚР Заңы – сіздің рұқсатыңызсыз деректерді жинауға және таратуға қатаң тыйым салады.</p>
-      </div>
+    <div class="stat-item">
+        <span class="stat-number">10k+</span>
+        <span class="stat-label">Қолданушылар</span>
     </div>
-  </div>
 </div>
+
+<section id="data">
+    <div class="section-title">
+        <h2>Маңызды деректер</h2>
+        <p>Күнделікті өмірде біз қандай ақпаратпен бөлісетінімізді білу өте маңызды.</p>
+    </div>
+
+    <div class="grid">
+        <div class="glass-card">
+            <div class="icon-box"><i class="fa-regular fa-id-card"></i></div>
+            <h3>Жеке идентификаторлар</h3>
+            <p>Аты-жөні, ЖСН, төлқұжат нөмірлері және басқа да мемлекеттік тіркеу деректері.</p>
+        </div>
+
+        <div class="glass-card">
+            <div class="icon-box"><i class="fa-solid fa-credit-card"></i></div>
+            <h3>Қаржылық ақпарат</h3>
+            <p>Банк карталарының нөмірлері, шоттар, транзакциялар тарихы және несиелік тарих.</p>
+        </div>
+
+        <div class="glass-card">
+            <div class="icon-box"><i class="fa-solid fa-globe"></i></div>
+            <h3>Цифрлық із</h3>
+            <p>Браузер тарихы, IP мекенжайлар, cookies файлдары және әлеуметтік желідегі белсенділік.</p>
+        </div>
+    </div>
 </section>
+
+<section id="risks">
+    <div class="section-title">
+        <h2>Қауіпсіздік қатерлері</h2>
+        <p>Интернетте кездесетін негізгі қауіптер және олардан қорғану жолдары.</p>
+    </div>
+
+    <div class="flip-grid">
+        <div class="flip-card">
+            <div class="flip-inner">
+                <div class="flip-front">
+                    <i class="fa-solid fa-fish-fins"></i>
+                    <h3>Фишинг</h3>
+                    <p style="margin-top:10px; color:#aaa; font-size:14px;">(Айналдыру үшін басыңыз)</p>
+                </div>
+                <div class="flip-back">
+                    <h3>Фишинг деген не?</h3>
+                    <p>Алаяқтар сізді алдап, құпия сөздер мен карта мәліметтерін енгізуге мәжбүрлейтін жалған хаттар мен сайттар.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card">
+            <div class="flip-inner">
+                <div class="flip-front">
+                    <i class="fa-solid fa-user-secret"></i>
+                    <h3>Әлеуметтік инженерия</h3>
+                    <p style="margin-top:10px; color:#aaa; font-size:14px;">(Айналдыру үшін басыңыз)</p>
+                </div>
+                <div class="flip-back">
+                    <h3>Адам факторы</h3>
+                    <p>Хакерлер технологияны емес, адамның сенгіштігін пайдаланып, ақпаратты қолға түсіреді.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card">
+            <div class="flip-inner">
+                <div class="flip-front">
+                    <i class="fa-solid fa-virus"></i>
+                    <h3>Malware</h3>
+                    <p style="margin-top:10px; color:#aaa; font-size:14px;">(Айналдыру үшін басыңыз)</p>
+                </div>
+                <div class="flip-back">
+                    <h3>Зиянды БҚ</h3>
+                    <p>Компьютеріңізді зақымдайтын немесе ақпарат ұрлайтын вирустар, трояндар және шпиондық бағдарламалар.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-col">
+            <h4>CyberGuard</h4>
+            <p style="color:#aaa; font-size:14px;">Сіздің цифрлық әлемдегі сенімді серіктесіңіз. Біз деректерді қорғаудың ең жаңа технологияларын ұсынамыз.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Сілтемелер</h4>
+            <ul>
+                <li><a href="#">Басты бет</a></li>
+                <li><a href="#">Қызметтер</a></li>
+                <li><a href="#">Құпиялылық саясаты</a></li>
+                <li><a href="#">Байланыс</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Бізге жазылыңыз</h4>
+            <div class="socials">
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="copyright">
+        &copy; 2024 CyberGuard Kazakhstan. Барлық құқықтар қорғалған.
+    </div>
+</footer>
 
 <script>
-function showPage(n){
-  const t=document.getElementById('page-transition');
-  t.className='enter';
-  setTimeout(()=>{
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.getElementById('page'+n).classList.add('active');
-    t.className='exit';
-    window.scrollTo(0,0); // Бет ауысқанда жоғарыға лақтыру
-  },400);
-}
+    // 1. MOBILE MENU TOGGLE
+    const menuBtn = document.querySelector('.menu-btn');
+    const navLinks = document.querySelector('.nav-links');
 
-/* REVEAL ON SCROLL */
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting) {
-      entry.target.classList.add('visible');
+    menuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    // 2. SCROLL ANIMATION (REVEAL)
+    const revealElements = document.querySelectorAll('.glass-card, .flip-card, .section-title');
+    
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    revealElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(50px)';
+        el.style.transition = 'all 0.8s ease-out';
+        revealObserver.observe(el);
+    });
+
+    // 3. CANVAS BACKGROUND (CONSTELLATION EFFECT)
+    const canvas = document.getElementById('canvas-bg');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     }
-  });
-}, { threshold: 0.1 });
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.5;
+            this.vy = (Math.random() - 0.5) * 0.5;
+            this.size = Math.random() * 2 + 1;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        }
+        draw() {
+            ctx.fillStyle = 'rgba(0, 242, 96, 0.5)';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        particles = [];
+        const numberOfParticles = (canvas.width * canvas.height) / 15000;
+        for (let i = 0; i < numberOfParticles; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+            
+            // Draw lines between close particles
+            for (let j = i; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < 100) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(0, 242, 96, ${0.1 - distance/1000})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(animateParticles);
+    }
+
+    initParticles();
+    animateParticles();
 </script>
 
 </body>
