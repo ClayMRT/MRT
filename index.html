@@ -5,184 +5,200 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Дербес деректерді қорғау</title>
 
-<!-- ICONS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<!-- FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 /* =========================
    BASE
    ========================= */
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:'Inter',sans-serif;
-  background:#05050b;
-  color:#fff;
-  overflow-x:hidden;
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #05050b;
+  color: #fff;
+  overflow-x: hidden;
 }
-h1{font-size:36px;margin-bottom:30px}
-h3{margin:10px 0}
+h1 { font-size: 32px; margin-bottom: 30px; text-align: center; }
+h3 { margin: 15px 0 10px; font-size: 1.2rem; }
+p { color: #ccc; line-height: 1.5; }
 
 /* BACKGROUND */
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
   background:
     radial-gradient(circle at 20% 20%, rgba(108,99,255,.18), transparent 40%),
     radial-gradient(circle at 80% 80%, rgba(0,255,200,.15), transparent 40%);
-  z-index:-1;
-  animation:bgMove 20s linear infinite;
+  z-index: -1;
+  animation: bgMove 20s linear infinite;
 }
-@keyframes bgMove{
-  from{filter:hue-rotate(0deg)}
-  to{filter:hue-rotate(360deg)}
+@keyframes bgMove {
+  from { filter: hue-rotate(0deg); }
+  to { filter: hue-rotate(360deg); }
 }
 
 /* =========================
    NAV
    ========================= */
-.nav{
-  display:flex;
-  gap:20px;
-  justify-content:center;
-  padding:20px;
-  position:sticky;
-  top:0;
-  background:rgba(5,5,11,.8);
-  backdrop-filter:blur(14px);
-  z-index:100;
+.nav {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  background: rgba(5,5,11,.8);
+  backdrop-filter: blur(14px);
+  z-index: 100;
+  flex-wrap: wrap; /* Мобильді құрылғыда сыймаса төмен түсу үшін */
 }
-.nav button{
-  flex:1;
-  max-width:220px;
-  padding:14px;
-  border:none;
-  border-radius:14px;
-  background:#6c63ff;
-  color:#fff;
-  font-weight:600;
-  cursor:pointer;
+.nav button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  background: #6c63ff;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
+.nav button:active { transform: scale(0.95); }
 
 /* =========================
    PAGES
    ========================= */
-.page{
-  display:none;
-  min-height:100vh;
-  padding:60px 6vw;
+.page {
+  display: none;
+  min-height: 100vh;
+  padding: 40px 5vw;
+  max-width: 1200px; /* Контент тым созылып кетпеу үшін */
+  margin: 0 auto;
 }
-.page.active{display:block}
+.page.active { display: block; }
 
 /* =========================
-   GRIDS
+   GRIDS (СУРЕТТЕР МӘСЕЛЕСІ ШЕШІЛДІ)
    ========================= */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:40px;
+.grid {
+  display: grid;
+  /* 320px тым үлкен, оны 260px-қа өзгерттім, енді олар қатар тұрады */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
 }
-.card{
-  background:#121224;
-  border-radius:24px;
-  padding:24px;
-  transition:.35s;
+.card {
+  background: #121224;
+  border-radius: 20px;
+  padding: 20px;
+  transition: .35s;
+  display: flex;
+  flex-direction: column;
 }
-.card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 30px 80px rgba(108,99,255,.25);
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(108,99,255,.2);
 }
-.card img{
-  width:100%;
-  height:200px;
-  object-fit:cover;
-  border-radius:16px;
+.card img {
+  width: 100%;
+  height: 180px; /* Биіктігін сәл азайттым, ұқыпты көріну үшін */
+  object-fit: cover;
+  border-radius: 12px;
 }
 
 /* =========================
-   FLIP CARDS
+   FLIP CARDS (АРТҚЫ ЖАҒЫ МӘСЕЛЕСІ ШЕШІЛДІ)
    ========================= */
-.flip-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:40px;
+.flip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
 }
-.flip-card{
-  perspective:1600px;
-  height:360px;
+.flip-card {
+  perspective: 1600px;
+  height: 320px; /* Биіктік бекітілген */
 }
-.flip-inner{
-  width:100%;
-  height:100%;
-  transition:.9s;
-  transform-style:preserve-3d;
+.flip-inner {
+  width: 100%;
+  height: 100%;
+  transition: .8s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transform-style: preserve-3d;
+  position: relative;
 }
-.flip-card:hover .flip-inner{
-  transform:rotateY(180deg);
+.flip-card:hover .flip-inner {
+  transform: rotateY(180deg);
 }
-.flip-front,.flip-back{
-  position:absolute;
-  inset:0;
-  border-radius:24px;
-  padding:24px;
-  backface-visibility:hidden;
-  overflow-y:auto;
+
+/* Ортақ стильдер (алдыңғы және артқы) */
+.flip-front, .flip-back {
+  position: absolute;
+  inset: 0; /* Толық ені мен биіктігін алады */
+  border-radius: 24px;
+  padding: 30px;
+  backface-visibility: hidden;
+  /* Мәтінді ортаға келтіру үшін Flex қолданамыз */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
-.flip-front{
-  background:#6c63ff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:22px;
-  font-weight:700;
+
+.flip-front {
+  background: linear-gradient(135deg, #6c63ff, #4b44b8);
+  font-size: 24px;
+  font-weight: 700;
+  border: 1px solid rgba(255,255,255,0.1);
 }
-.flip-back{
-  background:#1b1b38;
-  transform:rotateY(180deg);
-  line-height:1.6;
+
+.flip-back {
+  background: #1b1b38;
+  transform: rotateY(180deg);
+  line-height: 1.6;
+  font-size: 16px;
+  border: 1px solid #6c63ff;
 }
 
 /* =========================
    TRANSITION
    ========================= */
-#page-transition{
-  position:fixed;
-  inset:0;
-  background:radial-gradient(circle,#6c63ff,#05050b);
-  transform:scaleY(0);
-  transform-origin:top;
-  z-index:9999;
-  pointer-events:none;
+#page-transition {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, #6c63ff, #05050b);
+  transform: scaleY(0);
+  transform-origin: top;
+  z-index: 9999;
+  pointer-events: none;
 }
-.enter{animation:enter .8s forwards}
-.exit{animation:exit .8s forwards}
-@keyframes enter{to{transform:scaleY(1)}}
-@keyframes exit{to{transform:scaleY(0)}}
+.enter { animation: enter .6s forwards; }
+.exit { animation: exit .6s forwards; }
+@keyframes enter { to { transform: scaleY(1); } }
+@keyframes exit { to { transform: scaleY(0); } }
 
 /* =========================
    REVEAL
    ========================= */
-.reveal{
-  opacity:0;
-  transform:translateY(40px);
-  transition:1s cubic-bezier(.19,1,.22,1);
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 0.8s ease-out;
 }
-.reveal.visible{
-  opacity:1;
-  transform:none;
+.reveal.visible {
+  opacity: 1;
+  transform: none;
 }
 
 /* =========================
    MOBILE
    ========================= */
-@media(max-width:768px){
-  h1{font-size:26px}
-  .grid,.flip-grid{grid-template-columns:1fr}
-  .flip-card{height:420px}
+@media(max-width: 600px) {
+  h1 { font-size: 24px; }
+  .grid, .flip-grid { grid-template-columns: 1fr; } /* 1 баған */
+  .flip-card { height: 280px; }
 }
 </style>
 </head>
@@ -196,61 +212,69 @@ body::before{
   <button onclick="showPage(2)">Қауіптер мен заңдар</button>
 </nav>
 
-<!-- PAGE 1 -->
 <section id="page1" class="page active">
 <h1><i class="fa-solid fa-id-card"></i> Дербес деректер туралы</h1>
 
 <div class="grid">
   <div class="card reveal">
-    <img src="https://images.unsplash.com/photo-1556155092-8707de31f9c4">
+    <img src="https://images.unsplash.com/photo-1556155092-8707de31f9c4" alt="Personal Data">
     <h3>Жеке деректер</h3>
-    <p>Аты-жөні, ЖСН, телефон, банк карталары, мекенжай.</p>
+    <p>Аты-жөні, ЖСН, телефон нөмірі, банк карталарының деректері, мекенжай.</p>
   </div>
 
   <div class="card reveal">
-    <img src="https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0">
+    <img src="https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0" alt="Digital Footprint">
     <h3>Цифрлық із</h3>
-    <p>IP, cookies, іздеу тарихы, аккаунт белсенділігі.</p>
+    <p>IP мекенжай, cookies, іздеу тарихы, әлеуметтік желідегі белсенділік.</p>
   </div>
 
   <div class="card reveal">
-    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3">
-    <h3>Қорғау</h3>
-    <p>Күшті пароль, 2FA, шифрлау, VPN.</p>
+    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3" alt="Protection">
+    <h3>Қорғау жолдары</h3>
+    <p>Күрделі пароль, екі факторлы аутентификация (2FA), шифрлау, VPN қолдану.</p>
   </div>
 </div>
 </section>
 
-<!-- PAGE 2 -->
 <section id="page2" class="page">
 <h1><i class="fa-solid fa-shield-halved"></i> Қауіптер мен заңдар</h1>
 
 <div class="flip-grid">
   <div class="flip-card reveal">
     <div class="flip-inner">
-      <div class="flip-front">Фишинг</div>
+      <div class="flip-front">
+        <i class="fa-solid fa-fish" style="margin-bottom:10px; font-size:40px;"></i>
+        Фишинг
+      </div>
       <div class="flip-back">
-        Фишинг — жалған сайттар арқылы логин мен парольді ұрлау.
-        Ол көбіне email, мессенджер арқылы таралады.
+        <h3>Фишинг деген не?</h3>
+        <p>Бұл – жалған сайттар немесе хаттар арқылы логин мен парольді ұрлау әдісі. Ол көбіне email немесе мессенджер сілтемелері арқылы таралады.</p>
       </div>
     </div>
   </div>
 
   <div class="flip-card reveal">
     <div class="flip-inner">
-      <div class="flip-front">Хакерлер</div>
+      <div class="flip-front">
+        <i class="fa-solid fa-user-secret" style="margin-bottom:10px; font-size:40px;"></i>
+        Хакерлер
+      </div>
       <div class="flip-back">
-        Хакерлер деректерді ұрлап, сатады немесе аккаунттарды бұзады.
+        <h3>Хакерлік шабуыл</h3>
+        <p>Зиянкестер арнайы бағдарламалар арқылы дерекқорды бұзып, жеке ақпаратты ұрлайды, сатады немесе бопсалайды.</p>
       </div>
     </div>
   </div>
 
   <div class="flip-card reveal">
     <div class="flip-inner">
-      <div class="flip-front">ҚР Заңы</div>
+      <div class="flip-front">
+        <i class="fa-solid fa-scale-balanced" style="margin-bottom:10px; font-size:40px;"></i>
+        ҚР Заңы
+      </div>
       <div class="flip-back">
-        «Дербес деректер және оларды қорғау туралы» заң —
-        деректерді заңсыз жинауға тыйым салады.
+        <h3>Заңмен қорғау</h3>
+        <p>«Дербес деректер және оларды қорғау туралы» ҚР Заңы – сіздің рұқсатыңызсыз деректерді жинауға және таратуға қатаң тыйым салады.</p>
       </div>
     </div>
   </div>
@@ -265,16 +289,20 @@ function showPage(n){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.getElementById('page'+n).classList.add('active');
     t.className='exit';
+    window.scrollTo(0,0); // Бет ауысқанда жоғарыға лақтыру
   },400);
 }
 
-/* REVEAL */
-const obs=new IntersectionObserver(e=>{
-  e.forEach(x=>{
-    if(x.isIntersecting)x.target.classList.add('visible');
+/* REVEAL ON SCROLL */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
   });
-},{threshold:.15});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
 
 </body>
